@@ -1,5 +1,17 @@
 # vue3-element-admin
 > 基于 vue3 typescript element-plus 的后台管理系统
+
+## 依赖
+- vue3
+- vue-router
+- vuex
+- element-plus 按需引入
+- axios
+
+## 功能
+- [ ] 登录
+- [ ] 菜单
+
 ## Project setup
 ```
 npm install
