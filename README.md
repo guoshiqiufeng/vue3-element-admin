@@ -7,6 +7,10 @@
 - vuex
 - element-plus 按需引入
 - axios
+- scss
+- normalize.css
+
+## 演示地址
 
 ## 功能
 - [ ] 登录
