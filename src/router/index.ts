@@ -5,14 +5,18 @@ import localCache from '@/utils/cache'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/main'
   },
   {
     path: '/login',
     component: () => import('@/views/common/login/login.vue'),
     name: 'login',
     meta: { title: '登录' }
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: Home
   }
 ]
 

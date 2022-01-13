@@ -75,6 +75,7 @@ class HQRequest {
         })
         .catch(error => {
           this.showLoading = DEFAULT_LOADING
+          reject(error)
           return error
         })
     })

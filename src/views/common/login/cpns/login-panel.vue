@@ -19,30 +19,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 import LoginAccount from './login-account.vue'
-export default defineComponent({
-  components: { LoginAccount },
-  setup() {
-    // 属性
-    const currentTab = ref('account')
-    const isKeepPassword = ref(false)
-    const accountRef = ref<InstanceType<typeof LoginAccount>>()
-    const handleLoginClick = () => {
-      console.log('handleLoginClick')
-      if (currentTab.value === 'account') {
-        accountRef.value?.loginAction(isKeepPassword.value)
-      }
-    }
-    return {
-      isKeepPassword,
-      handleLoginClick,
-      accountRef,
-      currentTab
-    }
-  }
-})
+// 属性
+const isKeepPassword = ref(false)
+const accountRef = ref<InstanceType<typeof LoginAccount>>()
+const handleLoginClick = () => {
+  console.log('handleLoginClick')
+  accountRef.value?.loginAction(isKeepPassword.value)
+}
 </script>
 <style scoped lang="scss">
 .login-panel {

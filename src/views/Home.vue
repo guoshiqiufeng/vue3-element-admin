@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <div class="home">home</div>
 </template>
 
 <script lang="ts">
