@@ -1,0 +1,12 @@
+useTabs: false
+tabWidth: 2
+# 不加分号
+semi: false
+# 单引号
+singleQuote: true
+# 单行长度
+printWidth: 80
+# 逗号
+trailingComma: 'none'
+# (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：省略括号
+arrowParens: 'avoid'
