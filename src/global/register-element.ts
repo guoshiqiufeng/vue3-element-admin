@@ -1,8 +1,8 @@
-import 'element-plus/theme-chalk/base.css'
+// import 'element-plus/theme-chalk/base.css'
+// import 'element-plus/theme-chalk/index.css'
 // element-plus
 import {
   ElButton,
-  ElIcon,
   ElTabs,
   ElTable,
   ElForm,
@@ -20,7 +20,8 @@ import {
   ElRow,
   ElBreadcrumb,
   ElPagination,
-  ElDialog
+  ElDialog,
+  ElIcon
 } from 'element-plus'
 
 // element-plus icons
@@ -37,7 +38,6 @@ const { BreadcrumbItem } = ElBreadcrumb
 import type { App } from 'vue'
 const components = [
   ElButton,
-  ElIcon,
   ElTabs,
   TabPane,
   ElTable,
@@ -70,7 +70,8 @@ const components = [
   ElBreadcrumb,
   BreadcrumbItem,
   ElPagination,
-  ElDialog
+  ElDialog,
+  ElIcon
 ]
 const icons = [Expand, Fold]
 
