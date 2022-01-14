@@ -8,7 +8,11 @@
     </div>
     <div class="navbar-body">
       <el-menu class="body-menu menu-left" mode="horizontal">
-        <el-menu-item class="navbar-switch" index="0">
+        <el-menu-item
+          class="body-menu-switch"
+          index="0"
+          @click="sidebarFold = !sidebarFold"
+        >
           <icon-svg name="zhedie"></icon-svg>
         </el-menu-item>
       </el-menu>
@@ -42,6 +46,14 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import IconSvg from '@/components/icon-svg/src/icon-svg.vue'
 const store = useStore()
+const sidebarFold = computed({
+  get() {
+    return store.state.app.sidebarFold
+  },
+  set(val) {
+    store.commit('app/changeSidebarFold', val)
+  }
+})
 const userName = computed(() => {
   return store.state.login.userInfo.nickname
 })
@@ -56,11 +68,6 @@ const logoutHandle = () => {
 }
 </script>
 <style scoped lang="scss">
-$--color-primary: #3e8ef7;
-
-// Navbar
-$navbar--background-color: $--color-primary;
-
 .main-navbar {
   position: fixed;
   display: flex;
@@ -70,7 +77,7 @@ $navbar--background-color: $--color-primary;
   z-index: 1030;
   height: 50px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  background-color: $navbar--background-color;
+  background-color: #3e8ef7;
 
   .navbar-header {
     width: 230px;
@@ -133,6 +140,16 @@ $navbar--background-color: $--color-primary;
         }
       }
 
+      .body-menu-switch {
+        font-size: 18px;
+        border-bottom: none !important;
+        color: #303133 !important;
+        &:hover,
+        &:active {
+          background-color: transparent;
+        }
+      }
+
       a:focus,
       a:hover {
         text-decoration: none;
@@ -162,5 +179,26 @@ $navbar--background-color: $--color-primary;
       justify-content: flex-start;
     }
   }
+}
+
+.main-sidebar--fold {
+  .main-sidebar,
+  .navbar-header,
+  .header-brand {
+    width: 64px !important;
+  }
+  .header-brand {
+    .brand-lg {
+      display: none !important;
+    }
+    .brand-mini {
+      display: inline-block !important;
+    }
+  }
+}
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  background-color: transparent;
 }
 </style>

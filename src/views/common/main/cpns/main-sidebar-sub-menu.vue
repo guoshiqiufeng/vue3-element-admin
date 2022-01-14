@@ -1,32 +1,25 @@
 <template>
-  <div class="sub-menu">
-    <el-sub-menu
-      v-if="menu.list && menu.list.length >= 1"
-      :index="menu.menuId + ''"
-    >
-      <template #title>
-        <span>{{ menu.name }}</span>
-      </template>
-      <sub-menu
-        v-for="item in menu.list"
-        :key="item.menuId"
-        :menu="item"
-        :dynamicMenuRoutes="dynamicMenuRoutes"
-      >
-      </sub-menu>
-    </el-sub-menu>
-    <el-menu-item
-      v-else
-      :index="menu.menuId + ''"
-      @click="menuRouteHandle(menu)"
-    >
-      <icon-svg
-        :name="menu.icon || ''"
-        class="site-sidebar__menu-icon"
-      ></icon-svg>
+  <el-sub-menu
+    v-if="menu.children && menu.children.length >= 1"
+    :index="menu.menuId + ''"
+  >
+    <template #title>
+      <el-icon>
+        <icon-svg :name="menu.icon || ''" class="sidebar__menu-icon">
+        </icon-svg>
+      </el-icon>
       <span>{{ menu.name }}</span>
-    </el-menu-item>
-  </div>
+    </template>
+    <template v-for="item in menu.children" :key="item.menuId">
+      <sub-menu :menu="item" :dynamicMenuRoutes="dynamicMenuRoutes"></sub-menu>
+    </template>
+  </el-sub-menu>
+  <el-menu-item v-else :index="menu.menuId + ''" @click="menuRouteHandle(menu)">
+    <el-icon>
+      <icon-svg :name="menu.icon || ''" class="sidebar__menu-icon"> </icon-svg>
+    </el-icon>
+    <span>{{ menu.name }}</span>
+  </el-menu-item>
 </template>
 
 <script lang="ts" setup>
@@ -55,6 +48,11 @@ const menuRouteHandle = (menu: any) => {
 }
 </script>
 <style scoped lang="scss">
-.sub-menu {
+.sidebar__menu-icon {
+  width: 24px;
+  margin-right: 5px;
+  text-align: center;
+  font-size: 16px;
+  color: inherit !important;
 }
 </style>

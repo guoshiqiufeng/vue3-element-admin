@@ -17,3 +17,24 @@ img {
   vertical-align: middle;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.navbar-header,
+.header-brand,
+.navbar-body,
+.main-sidebar,
+.sidebar-body,
+.sidebar-menu.el-menu,
+.sidebar__menu-icon,
+.content,
+.content--tabs > .el-tabs .el-tabs__header {
+  transition: inline-block .3s, left .3s, width .3s, margin-left .3s, font-size .3s;
+}

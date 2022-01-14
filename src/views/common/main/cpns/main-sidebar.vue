@@ -1,16 +1,23 @@
 <template>
   <div class="main-sidebar">
-    <el-menu
-      :default-active="menuActiveName || 'home'"
-      :collapseTransition="false"
-    >
-      <sub-menu
-        v-for="menu in menuList"
-        :key="menu.menuId"
-        :menu="menu"
-        :dynamicMenuRoutes="dynamicMenuRoutes"
-      ></sub-menu>
-    </el-menu>
+    <div class="sidebar-body">
+      <el-menu
+        class="sidebar-menu"
+        background-color="#263238"
+        text-color="#8a979e"
+        active-text-color="#ffffff"
+        :default-active="menuActiveName || 'home'"
+        :collapse="sidebarFold"
+        :collapseTransition="false"
+      >
+        <template v-for="menu in menuList" :key="menu.menuId">
+          <sub-menu
+            :menu="menu"
+            :dynamicMenuRoutes="dynamicMenuRoutes"
+          ></sub-menu>
+        </template>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -22,6 +29,11 @@ import { isURL } from '@/utils/validate'
 
 const store = useStore()
 const dynamicMenuRoutes = ref([])
+
+const sidebarFold = computed(() => {
+  return store.state.app.sidebarFold
+})
+
 const menuList = computed({
   get() {
     return store.state.login.userMenus
@@ -98,5 +110,25 @@ const routeHandle = route => {
   z-index: 1020;
   width: 230px;
   overflow: hidden;
+  background-color: #263238;
+
+  .sidebar-body {
+    position: relative;
+    z-index: 1;
+    width: 250px;
+    height: 100%;
+    padding-bottom: 15px;
+    overflow-y: scroll;
+  }
+
+  .el-menu {
+    border-right: none;
+  }
+}
+.main-sidebar--fold {
+  .main-sidebar,
+  .el-menu.sidebar-menu {
+    width: 64px;
+  }
 }
 </style>

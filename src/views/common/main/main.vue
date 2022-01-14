@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :class="{ 'site-sidebar--fold': sidebarFold }">
+  <div class="main" :class="{ 'main-sidebar--fold': sidebarFold }">
     <main-navbar />
     <main-sidebar />
     <div class="content" :style="{ 'min-height': documentClientHeight + 'px' }">
@@ -26,13 +26,8 @@ const documentClientHeight = computed({
     store.commit('app/changeDocumentClientHeight', val)
   }
 })
-const sidebarFold = computed({
-  get() {
-    return store.state.app.sidebarFold
-  },
-  set(val) {
-    store.commit('app/changeSidebarFold', val)
-  }
+const sidebarFold = computed(() => {
+  return store.state.app.sidebarFold
 })
 </script>
 <style scoped lang="scss">
