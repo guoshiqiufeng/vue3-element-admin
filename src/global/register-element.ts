@@ -21,7 +21,8 @@ import {
   ElBreadcrumb,
   ElPagination,
   ElDialog,
-  ElIcon
+  ElIcon,
+  ElPopper
 } from 'element-plus'
 
 // element-plus icons
@@ -71,7 +72,8 @@ const components = [
   BreadcrumbItem,
   ElPagination,
   ElDialog,
-  ElIcon
+  ElIcon,
+  ElPopper
 ]
 const icons = [Expand, Fold]
 

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
 import localCache from '@/utils/cache'
 
 const routes: Array<RouteRecordRaw> = [
@@ -16,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
-    component: Home
+    component: () => import('@/views/common/main/main.vue')
   }
 ]
 

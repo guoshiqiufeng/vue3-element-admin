@@ -1,0 +1,46 @@
+<template>
+  <div class="main" :class="{ 'site-sidebar--fold': sidebarFold }">
+    <main-navbar />
+    <main-sidebar />
+    <div class="content" :style="{ 'min-height': documentClientHeight + 'px' }">
+      <main-content />
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+// 右上导航条
+import MainNavbar from './cpns/main-navbar.vue'
+// 左侧菜单
+import MainSidebar from './cpns/main-sidebar.vue'
+// 右部展示内容
+import MainContent from './cpns/main-content.vue'
+const store = useStore()
+const documentClientHeight = computed({
+  get() {
+    return store.state.app.documentClientHeight
+  },
+  set(val) {
+    store.commit('app/changeDocumentClientHeight', val)
+  }
+})
+const sidebarFold = computed({
+  get() {
+    return store.state.app.sidebarFold
+  },
+  set(val) {
+    store.commit('app/changeSidebarFold', val)
+  }
+})
+</script>
+<style scoped lang="scss">
+.main {
+  position: relative;
+  min-width: 1180px;
+  .content {
+    margin-left: 64px;
+  }
+}
+</style>
