@@ -7,6 +7,11 @@
       </h1>
     </div>
     <div class="navbar-body">
+      <el-menu class="body-menu menu-left" mode="horizontal">
+        <el-menu-item class="navbar-switch" index="0">
+          <icon-svg name="zhedie"></icon-svg>
+        </el-menu-item>
+      </el-menu>
       <el-menu class="body-menu" mode="horizontal">
         <el-menu-item class="body-menu-item" index="2">
           <el-dropdown :show-timeout="0" placement="bottom">
@@ -35,6 +40,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import IconSvg from '@/components/icon-svg/src/icon-svg.vue'
 const store = useStore()
 const userName = computed(() => {
   return store.state.login.userInfo.nickname
@@ -101,6 +107,8 @@ $navbar--background-color: $--color-primary;
   }
 
   .navbar-body {
+    display: flex;
+    flex-direction: row;
     flex: 1;
     padding-right: 15px;
     background-color: #fff;
@@ -109,6 +117,7 @@ $navbar--background-color: $--color-primary;
       justify-content: flex-end;
       background-color: transparent;
       border-bottom: 0;
+      width: 100%;
 
       .body-menu-item {
         border-bottom: none;
@@ -147,6 +156,10 @@ $navbar--background-color: $--color-primary;
           line-height: 16px;
         }
       }
+    }
+
+    .menu-left {
+      justify-content: flex-start;
     }
   }
 }

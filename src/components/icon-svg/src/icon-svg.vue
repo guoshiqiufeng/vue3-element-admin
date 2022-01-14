@@ -3,7 +3,6 @@
     <use :xlink:href="getName"></use>
   </svg>
 </template>
-
 <script lang="ts" setup>
 import { defineProps, computed } from 'vue'
 
