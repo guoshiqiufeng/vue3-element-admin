@@ -22,12 +22,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import SubMenu from './main-sidebar-sub-menu.vue'
 import { isURL } from '@/utils/validate'
 
 const store = useStore()
+const route = useRoute()
 const dynamicMenuRoutes = ref([])
 
 const sidebarFold = computed(() => {
@@ -70,11 +72,11 @@ const mainTabsActiveName = computed({
   }
 })
 // 路由操作
-const routeHandle = route => {
+const routeHandle = (route: any) => {
   if (route.meta.isTab) {
     // tab选中, 不存在先添加
-    var tab = (mainTabs as any).value.filter(
-      item => item.name === route.name
+    let tab = (mainTabs as any).value.filter(
+      (item: any) => item.name === route.name
     )[0]
     if (!tab) {
       if (route.meta.isDynamic) {
@@ -100,6 +102,9 @@ const routeHandle = route => {
     mainTabsActiveName.value = tab.name
   }
 }
+routeHandle(route)
+
+watch(route, routeHandle)
 </script>
 <style scoped lang="scss">
 .main-sidebar {

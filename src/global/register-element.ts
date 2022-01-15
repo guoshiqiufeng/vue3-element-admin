@@ -21,6 +21,8 @@ import {
   ElBreadcrumb,
   ElPagination,
   ElDialog,
+  ElCard,
+  ElCalendar,
   ElIcon,
   ElPopper
 } from 'element-plus'
@@ -72,6 +74,8 @@ const components = [
   BreadcrumbItem,
   ElPagination,
   ElDialog,
+  ElCard,
+  ElCalendar,
   ElIcon,
   ElPopper
 ]
