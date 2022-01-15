@@ -29,11 +29,27 @@ const documentClientHeight = computed({
 const sidebarFold = computed(() => {
   return store.state.app.sidebarFold
 })
+const resetDocumentClientHeight = () => {
+  documentClientHeight.value = document.documentElement['clientHeight']
+  window.onresize = () => {
+    documentClientHeight.value = document.documentElement['clientHeight']
+  }
+}
+resetDocumentClientHeight()
 </script>
 <style scoped lang="scss">
 .main {
   position: relative;
   min-width: 1180px;
+  .content {
+    position: relative;
+    padding-top: 50px;
+    margin-left: 230px;
+    min-height: 100%;
+    background: #f1f4f5;
+  }
+}
+.main-sidebar--fold {
   .content {
     margin-left: 64px;
   }

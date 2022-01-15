@@ -81,8 +81,8 @@ const routeHandle = (route: any) => {
     )[0]
     if (!tab) {
       if (route.meta.isDynamic) {
-        route = dynamicMenuRoutes.value.filter(
-          item => (item as any).name === route.name
+        route = dynamicMenuRoutes.filter(
+          (item: any) => item.name === route.name
         )[0]
         if (!route) {
           return console.error('未能找到可用标签页!')

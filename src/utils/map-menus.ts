@@ -45,6 +45,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
               route.meta = {
                 menuId: menu.menuId,
                 title: menu.name,
+                isTab: true,
                 isDynamic: true,
                 iframeUrl: ''
               }

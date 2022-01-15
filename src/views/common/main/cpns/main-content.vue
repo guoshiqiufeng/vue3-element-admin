@@ -1,14 +1,14 @@
 <template>
-  <div class="main-content">
+  <div class="main-content" :class="{ 'content-tabs': route.meta.isTab }">
     <el-tabs
       v-if="route.meta.isTab"
       v-model="mainTabsActiveName"
-      :closable="true"
+      closable
       @tab-click="selectedTabHandle"
       @tab-remove="removeTabHandle"
     >
       <el-dropdown class="site-tabs__tools" :show-timeout="0">
-        <i class="el-icon-arrow-down el-icon--right"></i>
+        <el-icon class="el-icon--right"><arrow-down /></el-icon>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="tabsCloseCurrentHandle"
@@ -70,6 +70,7 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import { ArrowDown } from '@element-plus/icons-vue'
 import { IMainTabs } from '@/store/app/types'
 import router from '@/router'
 import { isURL } from '@/utils/validate'
@@ -167,5 +168,52 @@ const tabsCloseAllHandle = () => {
   menuActiveName.value = ''
   router.push({ name: 'home' })
 }
+console.log(route.meta)
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.main-content {
+  position: relative;
+  padding: 15px;
+}
+.content-tabs {
+  padding: 55px 0 0;
+}
+
+:deep(.el-tabs__header) {
+  position: fixed;
+  top: 50px;
+  left: 230px;
+  right: 0;
+  z-index: 930;
+  padding: 0 55px 0 15px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+  background-color: #fff;
+  .el-tabs__nav-wrap {
+    margin-bottom: 0;
+
+    &:after {
+      display: none;
+    }
+  }
+}
+:deep(.el-tabs__content) {
+  padding: 0 15px 15px;
+
+  .site-tabs__tools {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    z-index: 931;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 16px;
+    line-height: 40px;
+    background-color: #f1f4f5;
+    cursor: pointer;
+
+    .el-icon--right {
+      margin-left: 0;
+    }
+  }
+}
+</style>
