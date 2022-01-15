@@ -27,10 +27,11 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import SubMenu from './main-sidebar-sub-menu.vue'
 import { isURL } from '@/utils/validate'
+import localCache from '@/utils/cache'
 
 const store = useStore()
 const route = useRoute()
-const dynamicMenuRoutes = ref([])
+const dynamicMenuRoutes = localCache.getCache('dynamicMenuRoutes')
 
 const sidebarFold = computed(() => {
   return store.state.app.sidebarFold
@@ -102,6 +103,7 @@ const routeHandle = (route: any) => {
     mainTabsActiveName.value = tab.name
   }
 }
+
 routeHandle(route)
 
 watch(route, routeHandle)

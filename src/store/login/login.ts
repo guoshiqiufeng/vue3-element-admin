@@ -9,7 +9,7 @@ import { IAccount } from '@/service/login/type'
 import { Md5 } from 'ts-md5/dist/md5'
 import store from '@/store'
 import localCache from '@/utils/cache'
-// import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 import router from '@/router'
 const loginModule: Module<ILoginState, any> = {
   namespaced: true,
@@ -35,13 +35,13 @@ const loginModule: Module<ILoginState, any> = {
       console.log('注册动态路由')
 
       // userMenus => routes
-      // const routes = mapMenusToRoutes(userMenus)
+      const routes = mapMenusToRoutes(userMenus)
 
       // 将routes => router.main.children
-      /*routes.forEach(route => {
+      routes.forEach(route => {
         router.addRoute('main', route)
-      })*/
-
+      })
+      localCache.setCache('dynamicMenuRoutes', routes)
       // 获取用户按钮的权限
       // const permissions = mapMenusToPermissions(userMenus)
     },
