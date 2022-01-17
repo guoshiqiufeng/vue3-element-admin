@@ -174,28 +174,30 @@ const tabsCloseAllHandle = () => {
 .main-content {
   position: relative;
   padding: 15px;
+
+  :deep(.el-tabs__header) {
+    position: fixed;
+    top: 50px;
+    left: 230px;
+    right: 0;
+    z-index: 930;
+    padding: 0 55px 0 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    .el-tabs__nav-wrap {
+      margin-bottom: 0;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
 }
+
 .content-tabs {
   padding: 55px 0 0;
 }
 
-:deep(.el-tabs__header) {
-  position: fixed;
-  top: 50px;
-  left: 230px;
-  right: 0;
-  z-index: 930;
-  padding: 0 55px 0 15px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
-  background-color: #fff;
-  .el-tabs__nav-wrap {
-    margin-bottom: 0;
-
-    &:after {
-      display: none;
-    }
-  }
-}
 :deep(.el-tabs__content) {
   padding: 0 15px 15px;
 

@@ -53,5 +53,8 @@ resetDocumentClientHeight()
   .content {
     margin-left: 64px;
   }
+  :deep(.el-tabs__header) {
+    left: 64px;
+  }
 }
 </style>
