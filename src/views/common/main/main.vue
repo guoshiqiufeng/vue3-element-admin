@@ -20,7 +20,7 @@ import MainContent from './cpns/main-content.vue'
 const store = useStore()
 const documentClientHeight = computed({
   get() {
-    return store.state.app.documentClientHeight
+    return store.state.app.documentClientHeight - 50
   },
   set(val) {
     store.commit('app/changeDocumentClientHeight', val)

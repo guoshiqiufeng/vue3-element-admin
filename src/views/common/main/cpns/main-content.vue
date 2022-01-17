@@ -114,7 +114,7 @@ const mainTabsActiveName = computed({
 })
 
 const siteContentViewHeight = computed(() => {
-  var height = (documentClientHeight as any).value - 50 - 30 - 2
+  var height = (documentClientHeight as any).value - 50 - 30 - 2 - 50
   if (route.meta.isTab) {
     height -= 40
     return isURL((route as any).meta.iframeUrl)
