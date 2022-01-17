@@ -114,7 +114,7 @@ const mainTabsActiveName = computed({
 })
 
 const siteContentViewHeight = computed(() => {
-  var height = (documentClientHeight as any).value - 50 - 30 - 2 - 50
+  let height = (documentClientHeight as any).value - 50 - 30 - 2 - 50
   if (route.meta.isTab) {
     height -= 40
     return isURL((route as any).meta.iframeUrl)
@@ -143,7 +143,7 @@ const removeTabHandle = (tabName: string) => {
   if ((mainTabs as any).value.length >= 1) {
     // 当前选中tab被删除
     if (tabName === mainTabsActiveName.value) {
-      var tab = mainTabs[mainTabs.value.length - 1]
+      const tab = (mainTabs as any)[(mainTabs as any).value.length - 1]
       router.push({ name: tab.name, query: tab.query, params: tab.params })
       mainTabsActiveName.value = route.name
     }
@@ -168,7 +168,7 @@ const tabsCloseAllHandle = () => {
   menuActiveName.value = ''
   router.push({ name: 'home' })
 }
-console.log(route.meta)
+// console.log(route.meta)
 </script>
 <style scoped lang="scss">
 .main-content {
