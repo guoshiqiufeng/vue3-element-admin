@@ -1,4 +1,3 @@
-// import 'element-plus/theme-chalk/base.css'
 // import 'element-plus/theme-chalk/index.css'
 // element-plus
 import {
@@ -8,6 +7,7 @@ import {
   ElTag,
   ElForm,
   ElInput,
+  ElInputNumber,
   ElRadio,
   ElCheckbox,
   ElLink,
@@ -25,7 +25,9 @@ import {
   ElCard,
   ElCalendar,
   ElIcon,
-  ElPopper
+  ElPopper,
+  ElPopconfirm,
+  ElOverlay
 } from 'element-plus'
 
 // element-plus icons
@@ -33,6 +35,7 @@ import { Expand, Fold } from '@element-plus/icons-vue'
 const { TabPane } = ElTabs
 const { TableColumn } = ElTable
 const { FormItem } = ElForm
+const { RadioGroup, RadioButton } = ElRadio
 const { CheckboxButton, CheckboxGroup } = ElCheckbox
 const { MenuItem, SubMenu } = ElMenu
 const { Aside, Header, Footer, Main } = ElContainer
@@ -50,7 +53,10 @@ const components = [
   ElForm,
   FormItem,
   ElInput,
+  ElInputNumber,
   ElRadio,
+  RadioGroup,
+  RadioButton,
   ElCheckbox,
   CheckboxButton,
   CheckboxGroup,
@@ -79,7 +85,9 @@ const components = [
   ElCard,
   ElCalendar,
   ElIcon,
-  ElPopper
+  ElPopper,
+  ElPopconfirm,
+  ElOverlay
 ]
 const icons = [Expand, Fold]
 

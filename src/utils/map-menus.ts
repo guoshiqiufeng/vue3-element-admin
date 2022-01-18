@@ -67,3 +67,28 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+export function treeDataTranslate(data: any, id = 'id', pid = 'parentId') {
+  const res = []
+  const temp = {}
+  for (let i = 0; i < data.length; i++) {
+    ;(temp as any)[data[i][id]] = data[i]
+  }
+  for (let k = 0; k < data.length; k++) {
+    if ((temp as any)[data[k][pid]] && data[k][id] !== data[k][pid]) {
+      if (!(temp as any)[data[k][pid]]['children']) {
+        ;(temp as any)[data[k][pid]]['children'] = []
+      }
+      if (!(temp as any)[data[k][pid]]['_level']) {
+        ;(temp as any)[data[k][pid]]['_level'] = 1
+      }
+      data[k]['_level'] = (temp as any)[data[k][pid]]._level + 1
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      temp[data[k][pid]]['children'].push(data[k])
+    } else {
+      res.push(data[k])
+    }
+  }
+  return res
+}

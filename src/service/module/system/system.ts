@@ -24,7 +24,7 @@ export function createPageData(url: string, newData: any) {
 }
 
 export function editPageData(url: string, editData: any) {
-  return hyRequest.patch<IDataType>({
+  return hyRequest.put<IDataType>({
     url: url,
     data: editData
   })
