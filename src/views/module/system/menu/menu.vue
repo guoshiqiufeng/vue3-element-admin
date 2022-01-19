@@ -26,18 +26,20 @@
       ref="pageModelRef"
       :modal-config="modalConfigComputed"
     >
-      <!--      <template #parentName="scope">
+      <template #parentName="scope">
         <el-popover
-          ref="menuListPopover"
+          ref="menuListPopoverRef"
           placement="bottom-start"
           trigger="click"
         >
           <el-tree
-            :data="menuList"
-            :props="menuListTreeProps"
+            :data="menuData.menuList"
+            :props="menuData.menuListTreeProps"
             node-key="menuId"
-            ref="menuListTree"
-            @current-change="menuListTreeCurrentChangeHandle"
+            @current-change="
+              (data, node) =>
+                menuListTreeCurrentChangeHandle(data, node, scope.row)
+            "
             :default-expanded-keys="[1]"
             :highlight-current="true"
             :expand-on-click-node="false"
@@ -45,19 +47,19 @@
           </el-tree>
         </el-popover>
         <el-input
-          v-model="dataForm.parentName"
-          v-popover:menuListPopover
+          v-model="scope.row.parentName"
+          v-popover="menuListPopoverRef"
           :readonly="true"
           placeholder="点击选择上级菜单"
           class="menu-list__input"
         ></el-input>
-      </template>-->
+      </template>
     </page-model>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
@@ -66,6 +68,21 @@ import { modalConfig } from './config/model.config'
 import { treeDataTranslate } from '@/utils/map-menus'
 import { usePageContent } from '@/hooks/use-page-content'
 import { usePageModel } from '@/hooks/use-page-model'
+import { getMenuSelectData } from '@/service/module/system/menu'
+const menuListPopoverRef = ref()
+const menuData = reactive({
+  menuListTreeProps: {
+    label: 'name',
+    children: 'children'
+  },
+  menuList: []
+})
+
+const menuListTreeCurrentChangeHandle = (data: any, node: any, row: any) => {
+  row.parentId = data.menuId
+  row.parentName = data.name
+  menuListPopoverRef.value.hide()
+}
 
 const modalConfigRef = reactive(modalConfig)
 const pageLoadCallback = (data: any) => {
@@ -100,15 +117,25 @@ const modalConfigComputed = computed(() => {
   return modalConfigRef
 })
 
+const loadMenuData = () => {
+  getMenuSelectData().then(res => {
+    if (res && res.data) {
+      ;(menuData as any).menuList = treeDataTranslate(res.data, 'menuId')
+    }
+  })
+}
+
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   () => {
     ;(defaultInfo as any).value.type = 1
     ;(defaultInfo as any).value.orderNum = 0
+    loadMenuData()
   },
   item => {
     console.log('edit')
     console.log(item)
     console.log((defaultInfo as any).value)
+    loadMenuData()
   }
 )
 </script>

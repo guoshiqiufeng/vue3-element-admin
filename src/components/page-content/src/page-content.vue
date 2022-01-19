@@ -72,7 +72,7 @@ import {
   defineExpose
 } from 'vue'
 
-import { getPageListData } from '@/service/module/system/system'
+import { getPageListData } from '@/service/module/base/base'
 
 const props = defineProps({
   contentTableConfig: {

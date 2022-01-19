@@ -33,7 +33,8 @@ export const modalConfig: IForm = {
       field: 'parentName',
       type: 'input',
       label: '上级菜单',
-      rules: [{ required: true, message: '菜单名称不能为空', trigger: 'blur' }]
+      rules: [{ required: true, message: '菜单名称不能为空', trigger: 'blur' }],
+      slotName: 'parentName'
     },
     {
       field: 'url',

@@ -1,7 +1,17 @@
 <template>
   <div class="page-add-or-update">
     <el-dialog :title="dialogTitle" v-model="dialogVisible" destroy-on-close>
-      <hq-form v-bind="modalConfig" v-model="formData"> </hq-form>
+      <hq-form v-bind="modalConfig" v-model="formData">
+        <template
+          v-for="item in otherPropSlots"
+          :key="item.prop"
+          #[item.slotName]
+        >
+          <template v-if="item.slotName">
+            <slot :name="item.slotName" :row="formData"></slot>
+          </template>
+        </template>
+      </hq-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -57,6 +67,15 @@ watch(
     }
   }
 )
+
+// 获取其他的动态插槽名称
+const otherPropSlots = props.modalConfig?.formItems.filter((item: any) => {
+  if (item.slotName === 'status') return false
+  if (item.slotName === 'createAt') return false
+  if (item.slotName === 'updateAt') return false
+  if (item.slotName === 'handler') return false
+  return true
+})
 
 const handleConfirmClick = () => {
   dialogVisible.value = false

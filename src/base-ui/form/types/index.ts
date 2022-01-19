@@ -19,6 +19,7 @@ export interface IFormItem {
   // 针对特殊的属性
   otherOptions?: any
   isHidden?: boolean
+  slotName?: string
   change?: (value: any) => any
 }
 
