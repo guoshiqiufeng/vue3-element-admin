@@ -5,7 +5,7 @@
 - vue3
 - vue-router
 - vuex
-- element-plus 按需引入
+- element-plus
 - axios
 - scss
 - normalize.css

@@ -7,12 +7,52 @@
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
-    />
+    >
+      <template #icon="scope">
+        <icon-svg :name="scope.row.icon || ''"></icon-svg>
+      </template>
+      <template #type="scope">
+        <el-tag v-if="scope.row.type === 0" size="small">目录</el-tag>
+        <el-tag v-else-if="scope.row.type === 1" size="small" type="success">
+          菜单
+        </el-tag>
+        <el-tag v-else-if="scope.row.type === 2" size="small" type="info">
+          按钮
+        </el-tag>
+      </template>
+    </page-content>
     <page-model
       :default-info="defaultInfo"
       ref="pageModelRef"
       :modal-config="modalConfigComputed"
-    />
+    >
+      <!--      <template #parentName="scope">
+        <el-popover
+          ref="menuListPopover"
+          placement="bottom-start"
+          trigger="click"
+        >
+          <el-tree
+            :data="menuList"
+            :props="menuListTreeProps"
+            node-key="menuId"
+            ref="menuListTree"
+            @current-change="menuListTreeCurrentChangeHandle"
+            :default-expanded-keys="[1]"
+            :highlight-current="true"
+            :expand-on-click-node="false"
+          >
+          </el-tree>
+        </el-popover>
+        <el-input
+          v-model="dataForm.parentName"
+          v-popover:menuListPopover
+          :readonly="true"
+          placeholder="点击选择上级菜单"
+          class="menu-list__input"
+        ></el-input>
+      </template>-->
+    </page-model>
   </div>
 </template>
 
@@ -67,6 +107,7 @@ const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   },
   item => {
     console.log('edit')
+    console.log(item)
     console.log((defaultInfo as any).value)
   }
 )

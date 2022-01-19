@@ -134,8 +134,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss">
-.hq-form {
-  padding-top: 22px;
-}
-</style>
+<style scoped lang="scss"></style>

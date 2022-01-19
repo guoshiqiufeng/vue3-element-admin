@@ -1,14 +1,7 @@
 <template>
   <div class="page-add-or-update">
-    <el-dialog
-      :title="dialogTitle"
-      v-model="dialogVisible"
-      width="30%"
-      center
-      destroy-on-close
-    >
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" destroy-on-close>
       <hq-form v-bind="modalConfig" v-model="formData"> </hq-form>
-      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -23,7 +16,6 @@
 
 <script lang="ts" setup>
 import { defineExpose, defineProps, ref, watch } from 'vue'
-import { useStore } from 'vuex'
 
 import HqForm from '@/base-ui/form'
 
