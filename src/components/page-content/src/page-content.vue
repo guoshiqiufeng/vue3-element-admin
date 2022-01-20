@@ -104,7 +104,6 @@ let data = reactive({
 
 watch(pageInfo, () => getPageData())
 const setPageData = (pageData: any) => {
-  console.log(pageData)
   data.dataList = pageData
   data.count = pageData.length
 }

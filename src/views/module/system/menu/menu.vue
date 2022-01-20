@@ -26,6 +26,7 @@
       ref="pageModelRef"
       :modal-config="modalConfigComputed"
       data-url="/system/menu"
+      primary-key="menuId"
       @complete="saveDataCompleteHandle"
     >
       <template #parentName="scope">
@@ -184,9 +185,13 @@ const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   item => {
     getMenuInfo(item.menuId).then(res => {
       if (res && res.data) {
-        menuTreeRef.value.setCurrentKey(res.data.parentId)
-        res.data.parentName = (menuTreeRef.value.getCurrentNode() || {})['name']
-        ;(pageModelRef as any).value.formData = res.data
+        setTimeout(() => {
+          menuTreeRef.value.setCurrentKey(res.data.parentId)
+          res.data.parentName = (menuTreeRef.value.getCurrentNode() || {})[
+            'name'
+          ]
+          ;(pageModelRef as any).value.formData = res.data
+        }, 100)
       }
     })
     loadMenuData()

@@ -40,6 +40,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  primaryKey: {
+    type: String,
+    default: 'id'
+  },
   otherInfo: {
     type: Object,
     default: () => ({})
@@ -74,9 +78,9 @@ const handleConfirmClick = () => {
   formRef.value?.formRef.validate((isValid: any) => {
     if (isValid) {
       if (props.dataUrl) {
-        if (props.defaultInfo.id) {
+        if (props.defaultInfo[props.primaryKey]) {
           // 编辑
-          editPageData(props.dataUrl + `/${props.defaultInfo.id}`, {
+          editPageData(props.dataUrl, {
             ...formData.value
           }).then(res => {
             if (res && res.code === 20000) {
