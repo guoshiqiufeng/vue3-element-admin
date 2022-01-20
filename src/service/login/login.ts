@@ -5,7 +5,8 @@ import { IDataType } from '../types'
 enum LoginAPI {
   AccountLogin = '/login',
   GetUserInfo = '/system/user/info',
-  GetUserMenus = '/system/menu/nav'
+  GetUserMenus = '/system/menu/nav',
+  AccountLogout = '/logout'
 }
 
 /**
@@ -17,6 +18,17 @@ export function accountLoginRequest(account: IAccount, showLoading = true) {
   return hqRequest.post<IDataType<string>>({
     url: LoginAPI.AccountLogin,
     data: account,
+    showLoading: showLoading
+  })
+}
+
+/**
+ * 退出登录
+ * @param showLoading
+ */
+export function accountLogoutRequest(showLoading = true) {
+  return hqRequest.post<IDataType<string>>({
+    url: LoginAPI.AccountLogout,
     showLoading: showLoading
   })
 }

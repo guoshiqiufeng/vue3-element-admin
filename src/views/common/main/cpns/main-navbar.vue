@@ -44,8 +44,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { ElMessageBox } from 'element-plus'
 import router from '@/router'
 import IconSvg from '@/components/icon-svg/src/icon-svg.vue'
+import { accountLogoutRequest } from '@/service/login/login'
+import localCache from '@/utils/cache'
 const store = useStore()
 const sidebarFold = computed({
   get() {
@@ -65,7 +68,22 @@ const updatePasswordHandle = () => {
   console.log('updatePasswordHandle')
 }
 const logoutHandle = () => {
-  console.log('logoutHandle')
+  ElMessageBox.confirm(`确定进行[退出]操作?`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      accountLogoutRequest().then((res: any) => {
+        if (res && res.code === 20000) {
+          localCache.clearCache()
+          router.push({ name: 'login' })
+        }
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 </script>
 <style scoped lang="scss">
