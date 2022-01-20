@@ -86,7 +86,11 @@ const handleConfirmClick = () => {
             if (res && res.code === 20000) {
               dialogVisible.value = false
               emits('complete', 'edit')
-              ElMessage.success('保存成功')
+              ElMessage({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500
+              })
             }
           })
         } else {
@@ -96,7 +100,11 @@ const handleConfirmClick = () => {
             if (res && res.code === 20000) {
               dialogVisible.value = false
               emits('complete', 'create')
-              ElMessage.success('保存成功')
+              ElMessage({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500
+              })
             }
           })
         }

@@ -7,6 +7,7 @@
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
+      @deleteBtnClick="handleDeleteData"
     >
       <template #icon="scope">
         <icon-svg :name="scope.row.icon || ''"></icon-svg>
@@ -95,6 +96,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, reactive } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
@@ -106,6 +108,7 @@ import { treeDataTranslate } from '@/utils/map-menus'
 import { usePageContent } from '@/hooks/use-page-content'
 import { usePageModel } from '@/hooks/use-page-model'
 import { getMenuInfo, getMenuSelectData } from '@/service/module/system/menu'
+import { deletePageData } from '@/service/module/base/base'
 const menuListPopoverRef = ref()
 const menuTreeRef = ref()
 const iconListPopover = ref()
@@ -173,6 +176,32 @@ const loadMenuData = () => {
     if (res && res.data) {
       ;(menuData as any).menuList = treeDataTranslate(res.data, 'menuId')
     }
+  })
+}
+
+const handleDeleteData = (item: any) => {
+  ElMessageBox.confirm(`确定对当前选中项进行[删除]操作?`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    let ids = []
+    ids.push(item.menuId)
+    deletePageData('/system/menu', ids).then((res: any) => {
+      if (res && res.code === 20000) {
+        ElMessage({
+          message: '操作成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            ;(pageContentRef as any).value.pageInfo = {
+              currentPage: 1,
+              pageSize: 10
+            }
+          }
+        })
+      }
+    })
   })
 }
 
