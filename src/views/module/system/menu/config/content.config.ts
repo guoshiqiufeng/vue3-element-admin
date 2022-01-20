@@ -22,7 +22,7 @@ export const contentTableConfig = {
     { label: '操作', minWidth: '150', slotName: 'handler' }
   ],
   showIndexColumn: false,
-  showSelectColumn: false,
+  showSelectColumn: true,
   childrenProps: {
     rowKey: 'menuId',
     treeProp: {

@@ -179,29 +179,33 @@ const loadMenuData = () => {
   })
 }
 
-const handleDeleteData = (item: any) => {
-  ElMessageBox.confirm(`确定对当前选中项进行[删除]操作?`, '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning'
-  }).then(() => {
-    let ids = []
+const handleDeleteData = (item: any, items: []) => {
+  let ids = []
+  if (item) {
     ids.push(item.menuId)
-    deletePageData('/system/menu', ids).then((res: any) => {
-      if (res && res.code === 20000) {
-        ElMessage({
-          message: '操作成功',
-          type: 'success',
-          duration: 1500,
-          onClose: () => {
-            ;(pageContentRef as any).value.pageInfo = {
-              currentPage: 1,
-              pageSize: 10
-            }
-          }
-        })
-      }
+  }
+  if (items) {
+    ids = items.map((tmp: any) => {
+      return tmp.menuId
     })
+  }
+  if (ids.length === 0) {
+    return
+  }
+  deletePageData('/system/menu', ids).then((res: any) => {
+    if (res && res.code === 20000) {
+      ElMessage({
+        message: '操作成功',
+        type: 'success',
+        duration: 1500,
+        onClose: () => {
+          ;(pageContentRef as any).value.pageInfo = {
+            currentPage: 1,
+            pageSize: 10
+          }
+        }
+      })
+    }
   })
 }
 

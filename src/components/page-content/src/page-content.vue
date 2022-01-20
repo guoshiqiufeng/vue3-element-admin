@@ -5,10 +5,18 @@
       :listCount="data.count"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
+      @selectionChange="handleSelectionChange"
     >
       <!-- header中的插槽 -->
       <template #headerHandler>
         <el-button type="primary" @click="handleNewClick"> 新增 </el-button>
+        <el-button
+          type="danger"
+          @click="handleAllDeleteClick"
+          :disabled="data.dataListSelections.length <= 0"
+        >
+          批量删除
+        </el-button>
       </template>
 
       <!-- 列中的插槽 -->
@@ -73,6 +81,7 @@ import {
 } from 'vue'
 
 import { getPageListData } from '@/service/module/base/base'
+import { ElMessageBox } from 'element-plus'
 
 const props = defineProps({
   contentTableConfig: {
@@ -99,7 +108,8 @@ const emits = defineEmits([
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 let data = reactive({
   dataList: [],
-  count: 0
+  count: 0,
+  dataListSelections: []
 })
 
 watch(pageInfo, () => getPageData())
@@ -137,8 +147,37 @@ const otherPropSlots = props.contentTableConfig?.propList.filter(
   }
 )
 
+const handleSelectionChange = (val: any) => {
+  data.dataListSelections = val
+}
+
 const handleDeleteClick = (item: any) => {
-  emits('deleteBtnClick', item)
+  ElMessageBox.confirm(`确定对当前选中项进行[删除]操作?`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      emits('deleteBtnClick', item)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
+
+const handleAllDeleteClick = (item: any) => {
+  ElMessageBox.confirm(`确定对当前选中项进行[删除]操作?`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      // 获取选中项
+      emits('deleteBtnClick', item, data.dataListSelections)
+    })
+    .catch(error => {
+      console.log(error)
+    })
 }
 
 const handleNewClick = () => {
