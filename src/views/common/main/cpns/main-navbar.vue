@@ -1,7 +1,7 @@
 <template>
   <div class="main-navbar">
     <div class="navbar-header">
-      <h1 class="header-brand">
+      <h1 class="header-brand" @click="router.push({ name: 'main' })">
         <a class="brand-lg" href="javascript:;">Vue3-Element-Admin</a>
         <a class="brand-mini" href="javascript:;">VEA</a>
       </h1>
@@ -44,6 +44,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import router from '@/router'
 import IconSvg from '@/components/icon-svg/src/icon-svg.vue'
 const store = useStore()
 const sidebarFold = computed({

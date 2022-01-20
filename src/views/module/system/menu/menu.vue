@@ -96,7 +96,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, reactive } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
