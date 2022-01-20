@@ -1,7 +1,7 @@
 <template>
   <div class="page-add-or-update">
     <el-dialog :title="dialogTitle" v-model="dialogVisible" destroy-on-close>
-      <hq-form v-bind="modalConfig" v-model="formData">
+      <hq-form v-bind="modalConfig" ref="formRef" v-model="formData">
         <template
           v-for="item in otherPropSlots"
           :key="item.prop"
@@ -28,6 +28,8 @@
 import { defineExpose, defineProps, ref, watch } from 'vue'
 
 import HqForm from '@/base-ui/form'
+import { createPageData, editPageData } from '@/service/module/base/base'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps({
   modalConfig: {
@@ -42,7 +44,7 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  addDataUrl: {
+  createDataUrl: {
     type: String,
     default: ''
   },
@@ -58,7 +60,7 @@ const props = defineProps({
 const dialogVisible = ref(false)
 const dialogTitle = ref('新增')
 const formData = ref<any>({})
-
+const formRef = ref<any>({})
 watch(
   () => props.defaultInfo,
   newValue => {
@@ -78,20 +80,30 @@ const otherPropSlots = props.modalConfig?.formItems.filter((item: any) => {
 })
 
 const handleConfirmClick = () => {
-  dialogVisible.value = false
-  if (Object.keys(props.defaultInfo).length) {
-    // 编辑
-    // store.dispatch('system/editPageDataAction', {
-    //   pageName: props.pageName,
-    //   editData: { ...formData.value, ...props.otherInfo },
-    //   id: props.defaultInfo.id
-    // })
-  } else {
-    // store.dispatch('system/createPageDataAction', {
-    //   pageName: props.pageName,
-    //   newData: { ...formData.value, ...props.otherInfo }
-    // })
-  }
+  formRef.value?.formRef.validate((isValid: any) => {
+    if (isValid) {
+      if (props.defaultInfo.id) {
+        // 编辑
+        editPageData(props.editDataUrl + `/${props.defaultInfo.id}`, {
+          ...formData.value
+        }).then(res => {
+          if (res && res.code === 20000) {
+            dialogVisible.value = false
+            ElMessage.success('保存成功')
+          }
+        })
+      } else {
+        createPageData(props.createDataUrl, {
+          ...formData.value
+        }).then(res => {
+          if (res && res.code === 20000) {
+            dialogVisible.value = false
+            ElMessage.success('保存成功')
+          }
+        })
+      }
+    }
+  })
 }
 defineExpose({
   dialogVisible,

@@ -25,11 +25,14 @@
       :default-info="defaultInfo"
       ref="pageModelRef"
       :modal-config="modalConfigComputed"
+      create-data-url="/system/menu"
+      edit-data-url="/system/menu"
     >
       <template #parentName="scope">
         <el-popover
           ref="menuListPopoverRef"
           placement="bottom-start"
+          virtual-triggering
           trigger="click"
         >
           <el-tree
@@ -54,6 +57,36 @@
           class="menu-list__input"
         ></el-input>
       </template>
+      <template #icon="scope">
+        <el-popover
+          ref="iconListPopover"
+          placement="bottom-start"
+          trigger="click"
+          width="433px"
+          virtual-triggering
+          popper-class="menu__icon-popover"
+        >
+          <div class="menu__icon-inner">
+            <div class="menu__icon-list">
+              <el-button
+                v-for="(item, index) in iconData.iconList"
+                :key="index"
+                @click="iconActiveHandle(item, scope.row)"
+                :class="{ 'is-active': item === scope.row.icon }"
+              >
+                <icon-svg :name="item"></icon-svg>
+              </el-button>
+            </div>
+          </div>
+        </el-popover>
+        <el-input
+          v-model="scope.row.icon"
+          v-popover="iconListPopover"
+          :readonly="true"
+          placeholder="菜单图标名称"
+          class="icon-list__input"
+        ></el-input>
+      </template>
     </page-model>
   </div>
 </template>
@@ -63,6 +96,8 @@ import { computed, ref, reactive } from 'vue'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
+import Icon from '@/icons'
+
 import { contentTableConfig } from './config/content.config'
 import { modalConfig } from './config/model.config'
 import { treeDataTranslate } from '@/utils/map-menus'
@@ -70,6 +105,7 @@ import { usePageContent } from '@/hooks/use-page-content'
 import { usePageModel } from '@/hooks/use-page-model'
 import { getMenuSelectData } from '@/service/module/system/menu'
 const menuListPopoverRef = ref()
+const iconListPopover = ref()
 const menuData = reactive({
   menuListTreeProps: {
     label: 'name',
@@ -77,11 +113,19 @@ const menuData = reactive({
   },
   menuList: []
 })
+const iconData = reactive({
+  iconList: []
+})
+;(iconData as any).iconList = Icon.getNameList()
 
 const menuListTreeCurrentChangeHandle = (data: any, node: any, row: any) => {
   row.parentId = data.menuId
   row.parentName = data.name
-  menuListPopoverRef.value.hide()
+  // menuListPopoverRef.value?.hide()
+}
+
+const iconActiveHandle = (data: any, row: any) => {
+  row.icon = data
 }
 
 const modalConfigRef = reactive(modalConfig)
@@ -141,5 +185,39 @@ const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
 </script>
 <style scoped lang="scss">
 .menu {
+  .menu-list__input,
+  .icon-list__input {
+    :deep(.el-input__inner) {
+      cursor: pointer;
+    }
+  }
+  &__icon-inner {
+    width: 448px;
+    max-height: 258px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  &__icon-list {
+    width: 448px;
+    padding: 0;
+    margin: -8px 0 0 -8px;
+    .el-button {
+      padding: 8px;
+      margin: 8px 0 0 8px;
+      :deep(span) {
+        display: inline-block;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+    }
+  }
+  .icon-list__tips {
+    font-size: 18px;
+    text-align: center;
+    color: #e6a23c;
+    cursor: pointer;
+  }
 }
 </style>

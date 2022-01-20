@@ -3,13 +3,14 @@
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-form :label-width="labelWidth">
+    <el-form ref="formRef" :model="modelValue" :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
               v-if="!item.isHidden"
               :label="item.label"
+              :prop="item.field"
               :rules="item.rules"
               :style="itemStyle"
             >
@@ -93,9 +94,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { IFormItem } from '../types'
-
+import { ElForm } from 'element-plus'
 export default defineComponent({
   props: {
     modelValue: {
@@ -127,12 +128,15 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    const formRef = ref<InstanceType<typeof ElForm>>()
+
     const handleValueChange = (value: any, field: string, change?: any) => {
       change && change(value)
       emit('update:modelValue', { ...props.modelValue, [field]: value })
     }
 
     return {
+      formRef,
       handleValueChange
     }
   }

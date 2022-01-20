@@ -61,7 +61,13 @@ export const modalConfig: IForm = {
         controlsPosition: 'right'
       }
     },
-    { field: 'icon', type: 'input', label: '菜单图标', isHidden: false }
+    {
+      field: 'icon',
+      type: 'input',
+      label: '菜单图标',
+      isHidden: false,
+      slotName: 'icon'
+    }
   ],
   colLayout: { span: 24 },
   itemStyle: {}
