@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineExpose, defineProps, ref, watch } from 'vue'
+import { defineEmits, defineExpose, defineProps, ref, watch } from 'vue'
 
 import HqForm from '@/base-ui/form'
 import { createPageData, editPageData } from '@/service/module/base/base'
@@ -44,19 +44,14 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  createDataUrl: {
+  dataUrl: {
     type: String,
     default: ''
-  },
-  editDataUrl: {
-    type: String,
-    default: ''
-  },
-  pageName: {
-    type: String,
-    require: true
   }
 })
+
+const emits = defineEmits(['complete'])
+
 const dialogVisible = ref(false)
 const dialogTitle = ref('新增')
 const formData = ref<any>({})
@@ -71,43 +66,46 @@ watch(
 )
 
 // 获取其他的动态插槽名称
-const otherPropSlots = props.modalConfig?.formItems.filter((item: any) => {
-  if (item.slotName === 'status') return false
-  if (item.slotName === 'createAt') return false
-  if (item.slotName === 'updateAt') return false
-  if (item.slotName === 'handler') return false
+const otherPropSlots = props.modalConfig?.formItems.filter(() => {
   return true
 })
 
 const handleConfirmClick = () => {
   formRef.value?.formRef.validate((isValid: any) => {
     if (isValid) {
-      if (props.defaultInfo.id) {
-        // 编辑
-        editPageData(props.editDataUrl + `/${props.defaultInfo.id}`, {
-          ...formData.value
-        }).then(res => {
-          if (res && res.code === 20000) {
-            dialogVisible.value = false
-            ElMessage.success('保存成功')
-          }
-        })
+      if (props.dataUrl) {
+        if (props.defaultInfo.id) {
+          // 编辑
+          editPageData(props.dataUrl + `/${props.defaultInfo.id}`, {
+            ...formData.value
+          }).then(res => {
+            if (res && res.code === 20000) {
+              dialogVisible.value = false
+              emits('complete', 'edit')
+              ElMessage.success('保存成功')
+            }
+          })
+        } else {
+          createPageData(props.dataUrl, {
+            ...formData.value
+          }).then(res => {
+            if (res && res.code === 20000) {
+              dialogVisible.value = false
+              emits('complete', 'create')
+              ElMessage.success('保存成功')
+            }
+          })
+        }
       } else {
-        createPageData(props.createDataUrl, {
-          ...formData.value
-        }).then(res => {
-          if (res && res.code === 20000) {
-            dialogVisible.value = false
-            ElMessage.success('保存成功')
-          }
-        })
+        console.warn('data-url is empty')
       }
     }
   })
 }
 defineExpose({
   dialogVisible,
-  dialogTitle
+  dialogTitle,
+  formData
 })
 </script>
 

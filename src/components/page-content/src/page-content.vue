@@ -149,7 +149,8 @@ const handleEditClick = (item: any) => {
   emits('editBtnClick', item)
 }
 defineExpose({
-  setPageData
+  setPageData,
+  pageInfo
 })
 </script>
 <style scoped lang="scss">

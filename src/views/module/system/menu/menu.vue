@@ -25,8 +25,8 @@
       :default-info="defaultInfo"
       ref="pageModelRef"
       :modal-config="modalConfigComputed"
-      create-data-url="/system/menu"
-      edit-data-url="/system/menu"
+      data-url="/system/menu"
+      @complete="saveDataCompleteHandle"
     >
       <template #parentName="scope">
         <el-popover
@@ -38,6 +38,7 @@
           <el-tree
             :data="menuData.menuList"
             :props="menuData.menuListTreeProps"
+            ref="menuTreeRef"
             node-key="menuId"
             @current-change="
               (data, node) =>
@@ -103,8 +104,9 @@ import { modalConfig } from './config/model.config'
 import { treeDataTranslate } from '@/utils/map-menus'
 import { usePageContent } from '@/hooks/use-page-content'
 import { usePageModel } from '@/hooks/use-page-model'
-import { getMenuSelectData } from '@/service/module/system/menu'
+import { getMenuInfo, getMenuSelectData } from '@/service/module/system/menu'
 const menuListPopoverRef = ref()
+const menuTreeRef = ref()
 const iconListPopover = ref()
 const menuData = reactive({
   menuListTreeProps: {
@@ -126,6 +128,10 @@ const menuListTreeCurrentChangeHandle = (data: any, node: any, row: any) => {
 
 const iconActiveHandle = (data: any, row: any) => {
   row.icon = data
+}
+
+const saveDataCompleteHandle = () => {
+  ;(pageContentRef as any).value.pageInfo = { currentPage: 1, pageSize: 10 }
 }
 
 const modalConfigRef = reactive(modalConfig)
@@ -176,9 +182,13 @@ const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
     loadMenuData()
   },
   item => {
-    console.log('edit')
-    console.log(item)
-    console.log((defaultInfo as any).value)
+    getMenuInfo(item.menuId).then(res => {
+      if (res && res.data) {
+        menuTreeRef.value.setCurrentKey(res.data.parentId)
+        res.data.parentName = (menuTreeRef.value.getCurrentNode() || {})['name']
+        ;(pageModelRef as any).value.formData = res.data
+      }
+    })
     loadMenuData()
   }
 )
