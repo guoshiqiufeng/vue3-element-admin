@@ -3,11 +3,12 @@
     <page-content
       :content-table-config="contentTableConfig"
       load-data-url="/system/menu/list"
+      delete-data-u-rl="/system/menu"
+      primary-key="menuId"
       ref="pageContentRef"
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
-      @deleteBtnClick="handleDeleteData"
     >
       <template #icon="scope">
         <icon-svg :name="scope.row.icon || ''"></icon-svg>
@@ -96,19 +97,18 @@
 
 <script lang="ts" setup>
 import { computed, ref, reactive } from 'vue'
-import { ElMessage } from 'element-plus'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
-
 import Icon from '@/icons'
 
 import { contentTableConfig } from './config/content.config'
-import { modalConfig } from './config/model.config'
-import { treeDataTranslate } from '@/utils/map-menus'
 import { usePageContent } from '@/hooks/use-page-content'
+
+import { modalConfig } from './config/model.config'
 import { usePageModel } from '@/hooks/use-page-model'
+
+import { treeDataTranslate } from '@/utils/map-menus'
 import { getMenuInfo, getMenuSelectData } from '@/service/module/system/menu'
-import { deletePageData } from '@/service/module/base/base'
 const menuListPopoverRef = ref()
 const menuTreeRef = ref()
 const iconListPopover = ref()
@@ -175,36 +175,6 @@ const loadMenuData = () => {
   getMenuSelectData().then(res => {
     if (res && res.data) {
       ;(menuData as any).menuList = treeDataTranslate(res.data, 'menuId')
-    }
-  })
-}
-
-const handleDeleteData = (item: any, items: []) => {
-  let ids = []
-  if (item) {
-    ids.push(item.menuId)
-  }
-  if (items) {
-    ids = items.map((tmp: any) => {
-      return tmp.menuId
-    })
-  }
-  if (ids.length === 0) {
-    return
-  }
-  deletePageData('/system/menu', ids).then((res: any) => {
-    if (res && res.code === 20000) {
-      ElMessage({
-        message: '操作成功',
-        type: 'success',
-        duration: 1500,
-        onClose: () => {
-          ;(pageContentRef as any).value.pageInfo = {
-            currentPage: 1,
-            pageSize: 10
-          }
-        }
-      })
     }
   })
 }

@@ -80,8 +80,9 @@ import {
   defineExpose
 } from 'vue'
 
-import { getPageListData } from '@/service/module/base/base'
+import { deletePageData, getPageListData } from '@/service/module/base/base'
 import { ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus/es'
 
 const props = defineProps({
   contentTableConfig: {
@@ -91,6 +92,14 @@ const props = defineProps({
   loadDataUrl: {
     type: String,
     require: true
+  },
+  deleteDataURl: {
+    type: String,
+    default: ''
+  },
+  primaryKey: {
+    type: String,
+    default: 'id'
   }
 })
 const emits = defineEmits([
@@ -158,7 +167,7 @@ const handleDeleteClick = (item: any) => {
     type: 'warning'
   })
     .then(() => {
-      emits('deleteBtnClick', item)
+      handleDeletedConfirm(item)
     })
     .catch(error => {
       console.log(error)
@@ -173,11 +182,45 @@ const handleAllDeleteClick = (item: any) => {
   })
     .then(() => {
       // 获取选中项
-      emits('deleteBtnClick', item, data.dataListSelections)
+      handleDeletedConfirm(item, data.dataListSelections)
     })
     .catch(error => {
       console.log(error)
     })
+}
+
+const handleDeletedConfirm = (item: any, items?: any) => {
+  if (!props.deleteDataURl) {
+    emits('deleteBtnClick', item, items)
+    return
+  }
+  let ids = []
+  if (item) {
+    ids.push(item[props.primaryKey])
+  }
+  if (items) {
+    ids = items.map((tmp: any) => {
+      return tmp.userId
+    })
+  }
+  if (ids.length === 0) {
+    return
+  }
+  deletePageData(props.deleteDataURl, ids).then((res: any) => {
+    if (res && res.code === 20000) {
+      ElMessage({
+        message: '操作成功',
+        type: 'success',
+        duration: 1500,
+        onClose: () => {
+          pageInfo.value = {
+            currentPage: 1,
+            pageSize: 10
+          }
+        }
+      })
+    }
+  })
 }
 
 const handleNewClick = () => {
