@@ -218,4 +218,8 @@ const tabsCloseAllHandle = () => {
     }
   }
 }
+// 修复 element-plus 1.3.0-beta.5 dropdown 下拉宽度
+:deep(.el-dropdown-menu__item) {
+  white-space: nowrap;
+}
 </style>
