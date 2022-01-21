@@ -1,7 +1,7 @@
 <template>
   <div class="main-navbar">
     <div class="navbar-header">
-      <h1 class="header-brand" @click="router.push({ name: 'main' })">
+      <h1 class="header-brand" @click="router.push({ name: 'home' })">
         <a class="brand-lg" href="javascript:;">Vue3-Element-Admin</a>
         <a class="brand-mini" href="javascript:;">VEA</a>
       </h1>

@@ -37,7 +37,10 @@ import { modalConfig } from './config/model.config'
 const [pageContentRef, handlePageLoad] = usePageContent(undefined)
 
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
-  undefined,
+  () => {
+    ;(defaultInfo as any).value.status = 1
+    ;(defaultInfo as any).value.orderNum = 0
+  },
   undefined
 )
 
