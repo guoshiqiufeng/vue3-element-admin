@@ -17,7 +17,7 @@ const hqRequest = new HQRequest({
       return error
     },
     responseInterceptor: res => {
-      console.log(res)
+      // console.log(res)
       return res
     },
     responseInterceptorCatch: error => {

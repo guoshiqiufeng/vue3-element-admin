@@ -1,19 +1,19 @@
 <template>
   <div class="user">
     <page-content
+      ref="pageContentRef"
       :content-table-config="contentTableConfig"
       load-data-url="/system/user/list"
       delete-data-u-rl="/system/user"
       primary-key="userId"
-      ref="pageContentRef"
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
     >
     </page-content>
     <page-model
-      :default-info="defaultInfo"
       ref="pageModelRef"
+      :default-info="defaultInfo"
       :modal-config="modalConfigComputed"
       data-url="/system/user"
       primary-key="userId"

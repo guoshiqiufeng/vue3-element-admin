@@ -8,12 +8,12 @@
         active-text-color="#ffffff"
         :default-active="menuActiveName || 'home'"
         :collapse="sidebarFold"
-        :collapseTransition="false"
+        :collapse-transition="false"
       >
         <template v-for="menu in menuList" :key="menu.menuId">
           <sub-menu
             :menu="menu"
-            :dynamicMenuRoutes="dynamicMenuRoutes"
+            :dynamic-menu-routes="dynamicMenuRoutes"
           ></sub-menu>
         </template>
       </el-menu>

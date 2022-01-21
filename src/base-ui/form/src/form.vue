@@ -32,11 +32,11 @@
                 <template v-else-if="item.type === 'input-number'">
                   <el-input-number
                     :model-value="modelValue[`${item.field}`]"
+                    v-bind="item.otherOptions"
+                    :label="item.label"
                     @update:modelValue="
                       handleValueChange($event, item.field, item.change)
                     "
-                    v-bind="item.otherOptions"
-                    :label="item.label"
                   ></el-input-number>
                 </template>
                 <template v-else-if="item.type === 'select'">

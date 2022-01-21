@@ -44,8 +44,8 @@
           </iframe>
           <template v-else>
             <router-view
-              v-slot="{ Component }"
               v-if="item.name === mainTabsActiveName"
+              v-slot="{ Component }"
             >
               <keep-alive>
                 <component :is="Component" />

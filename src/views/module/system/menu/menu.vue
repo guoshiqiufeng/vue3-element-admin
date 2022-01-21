@@ -1,11 +1,11 @@
 <template>
   <div class="menu">
     <page-content
+      ref="pageContentRef"
       :content-table-config="contentTableConfig"
       load-data-url="/system/menu/list"
       delete-data-u-rl="/system/menu"
       primary-key="menuId"
-      ref="pageContentRef"
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
@@ -24,8 +24,8 @@
       </template>
     </page-content>
     <page-model
-      :default-info="defaultInfo"
       ref="pageModelRef"
+      :default-info="defaultInfo"
       :modal-config="modalConfigComputed"
       data-url="/system/menu"
       primary-key="menuId"
@@ -39,17 +39,17 @@
           trigger="click"
         >
           <el-tree
+            ref="menuTreeRef"
             :data="menuData.menuList"
             :props="menuData.menuListTreeProps"
-            ref="menuTreeRef"
             node-key="menuId"
+            :default-expanded-keys="[1]"
+            :highlight-current="true"
+            :expand-on-click-node="false"
             @current-change="
               (data, node) =>
                 menuListTreeCurrentChangeHandle(data, node, scope.row)
             "
-            :default-expanded-keys="[1]"
-            :highlight-current="true"
-            :expand-on-click-node="false"
           >
           </el-tree>
         </el-popover>
@@ -75,8 +75,8 @@
               <el-button
                 v-for="(item, index) in iconData.iconList"
                 :key="index"
-                @click="iconActiveHandle(item, scope.row)"
                 :class="{ 'is-active': item === scope.row.icon }"
+                @click="iconActiveHandle(item, scope.row)"
               >
                 <icon-svg :name="item"></icon-svg>
               </el-button>

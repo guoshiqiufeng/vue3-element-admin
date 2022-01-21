@@ -1,10 +1,10 @@
 <template>
   <div class="page-content">
     <hq-table
-      :listData="data.dataList"
-      :listCount="data.count"
-      v-bind="contentTableConfig"
       v-model:page="pageInfo"
+      :list-data="data.dataList"
+      :list-count="data.count"
+      v-bind="contentTableConfig"
       @selectionChange="handleSelectionChange"
     >
       <!-- header中的插槽 -->
@@ -12,8 +12,8 @@
         <el-button type="primary" @click="handleNewClick"> 新增 </el-button>
         <el-button
           type="danger"
-          @click="handleAllDeleteClick"
           :disabled="data.dataListSelections.length <= 0"
+          @click="handleAllDeleteClick"
         >
           批量删除
         </el-button>

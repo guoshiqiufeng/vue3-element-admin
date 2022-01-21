@@ -1,6 +1,6 @@
 <template>
   <div class="page-add-or-update">
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" destroy-on-close>
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" destroy-on-close>
       <hq-form v-bind="modalConfig" ref="formRef" v-model="formData">
         <template
           v-for="item in otherPropSlots"

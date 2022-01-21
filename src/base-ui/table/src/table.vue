@@ -2,7 +2,7 @@
   <div class="hq-table">
     <div class="header">
       <slot name="header">
-        <div class="title" v-if="title">{{ title }}</div>
+        <div v-if="title" class="title">{{ title }}</div>
         <div class="handler">
           <slot name="headerHandler"></slot>
         </div>
@@ -12,8 +12,8 @@
       :data="listData"
       border
       style="width: 100%"
-      @selection-change="handleSelectionChange"
       v-bind="childrenProps"
+      @selection-change="handleSelectionChange"
     >
       <el-table-column
         v-if="showSelectColumn"
@@ -42,16 +42,16 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer" v-if="showFooter">
+    <div v-if="showFooter" class="footer">
       <slot name="footer">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="page.currentPage"
           :page-size="page.pageSize"
           :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
           :total="listCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
         >
         </el-pagination>
       </slot>

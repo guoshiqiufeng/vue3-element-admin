@@ -3,5 +3,5 @@ import IconSvg from '@/components/icon-svg'
 import '@/icons'
 export default function (app: App): void {
   // 注册
-  app.component('icon-svg', IconSvg)
+  app.component('IconSvg', IconSvg)
 }

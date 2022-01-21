@@ -11,7 +11,10 @@
       <span>{{ menu.name }}</span>
     </template>
     <template v-for="item in menu.children" :key="item.menuId">
-      <sub-menu :menu="item" :dynamicMenuRoutes="dynamicMenuRoutes"></sub-menu>
+      <sub-menu
+        :menu="item"
+        :dynamic-menu-routes="dynamicMenuRoutes"
+      ></sub-menu>
     </template>
   </el-sub-menu>
   <el-menu-item v-else :index="menu.menuId + ''" @click="menuRouteHandle(menu)">
