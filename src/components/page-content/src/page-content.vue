@@ -24,16 +24,16 @@
         <el-button
           plain
           size="small"
-          :type="scope.row.enable ? 'success' : 'danger'"
+          :type="scope.row.status ? 'success' : 'danger'"
         >
-          {{ scope.row.enable ? '启用' : '禁用' }}
+          {{ scope.row.status ? '启用' : '禁用' }}
         </el-button>
       </template>
-      <template #createAt="scope">
-        <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+      <template #createDate="scope">
+        <span>{{ $filters.formatTime(scope.row.createDate) }}</span>
       </template>
-      <template #updateAt="scope">
-        <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+      <template #modifyDate="scope">
+        <span>{{ $filters.formatTime(scope.row.modifyDate) }}</span>
       </template>
       <template #handler="scope">
         <div class="handle-buttons">
@@ -140,8 +140,8 @@ getPageData()
 const otherPropSlots = props.contentTableConfig?.propList.filter(
   (item: any) => {
     if (item.slotName === 'status') return false
-    if (item.slotName === 'createAt') return false
-    if (item.slotName === 'updateAt') return false
+    if (item.slotName === 'createDate') return false
+    if (item.slotName === 'modifyDate') return false
     if (item.slotName === 'handler') return false
     return true
   }
