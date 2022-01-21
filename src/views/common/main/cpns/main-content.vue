@@ -143,7 +143,7 @@ const removeTabHandle = (tabName: string) => {
   if ((mainTabs as any).value.length >= 1) {
     // 当前选中tab被删除
     if (tabName === mainTabsActiveName.value) {
-      const tab = (mainTabs as any)[(mainTabs as any).value.length - 1]
+      const tab = (mainTabs as any).value[(mainTabs as any).value.length - 1]
       router.push({ name: tab.name, query: tab.query, params: tab.params })
       mainTabsActiveName.value = route.name
     }

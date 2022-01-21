@@ -39,13 +39,10 @@ const props = defineProps({
 })
 
 const menuRouteHandle = (menu: any) => {
-  // console.log(props)
-  // console.log(menu)
   let route = props.dynamicMenuRoutes.filter(
     item => (item as any).meta.menuId === menu.menuId
   )
   if (route.length >= 1) {
-    // console.log('route')
     router.push({ name: (route as any)[0].name })
   }
 }

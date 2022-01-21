@@ -74,7 +74,7 @@ const loginModule: Module<ILoginState, any> = {
       if (!(useMenusResult && useMenusResult.data)) {
         return
       }
-      console.log(useMenusResult.data)
+      // console.log(useMenusResult.data)
       const menuList = useMenusResult.data.menuList
       const permissions = useMenusResult.data.permissions
       commit('changeUserMenus', menuList)
