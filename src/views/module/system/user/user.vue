@@ -1,5 +1,10 @@
 <template>
   <div class="user">
+    <page-search
+      :search-form-config="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    ></page-search>
     <page-content
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
@@ -25,14 +30,17 @@
 
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
+import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
+import { searchFormConfig } from './config/search.config'
+
 import { contentTableConfig } from './config/content.config'
 import { usePageContent } from '@/hooks/use-page-content'
-import { usePageModel } from '@/hooks/use-page-model'
 
 import { modalConfig } from './config/model.config'
+import { usePageModel } from '@/hooks/use-page-model'
 
 const [pageContentRef, handlePageLoad] = usePageContent(undefined)
 
