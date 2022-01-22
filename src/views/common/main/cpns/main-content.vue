@@ -77,7 +77,7 @@ import { isURL } from '@/utils/validate'
 const store = useStore()
 const route = useRoute()
 
-const documentClientHeight = computed({
+const documentClientHeight = computed<number>({
   get() {
     return store.state.app.documentClientHeight
   },
@@ -86,7 +86,7 @@ const documentClientHeight = computed({
   }
 })
 
-const menuActiveName = computed({
+const menuActiveName = computed<string>({
   get() {
     return store.state.app.menuActiveName
   },
@@ -95,7 +95,7 @@ const menuActiveName = computed({
   }
 })
 
-const mainTabs = computed({
+const mainTabs = computed<Array<IMainTabs>>({
   get() {
     return store.state.app.mainTabs
   },
@@ -114,10 +114,10 @@ const mainTabsActiveName = computed({
 })
 
 const siteContentViewHeight = computed(() => {
-  let height = (documentClientHeight as any).value - 50 - 30 - 2 - 50
+  let height = documentClientHeight.value - 50 - 30 - 2 - 50
   if (route.meta.isTab) {
     height -= 40
-    return isURL((route as any).meta.iframeUrl)
+    return isURL(route.meta.iframeUrl)
       ? { height: height + 'px' }
       : { minHeight: height + 'px' }
   }
@@ -125,9 +125,7 @@ const siteContentViewHeight = computed(() => {
 })
 
 const selectedTabHandle = (tab: IMainTabs) => {
-  let tmp = (mainTabs as any).value.filter(
-    (item: any) => item.name === tab.name
-  )
+  let tmp = mainTabs.value.filter((item: any) => item.name === tab.name)
   if (tmp.length >= 1) {
     router.push({
       name: tmp[0].name,
@@ -137,13 +135,11 @@ const selectedTabHandle = (tab: IMainTabs) => {
   }
 }
 const removeTabHandle = (tabName: string) => {
-  mainTabs.value = (mainTabs as any).value.filter(
-    (item: any) => item.name !== tabName
-  )
-  if ((mainTabs as any).value.length >= 1) {
+  mainTabs.value = mainTabs.value.filter((item: any) => item.name !== tabName)
+  if (mainTabs.value.length >= 1) {
     // 当前选中tab被删除
     if (tabName === mainTabsActiveName.value) {
-      const tab = (mainTabs as any).value[(mainTabs as any).value.length - 1]
+      const tab = mainTabs.value[mainTabs.value.length - 1]
       router.push({ name: tab.name, query: tab.query, params: tab.params })
       mainTabsActiveName.value = route.name
     }
@@ -158,7 +154,7 @@ const tabsCloseCurrentHandle = () => {
 }
 
 const tabsCloseOtherHandle = () => {
-  mainTabs.value = (mainTabs as any).value.filter(
+  mainTabs.value = mainTabs.value.filter(
     (item: any) => item.name === mainTabsActiveName.value
   )
 }

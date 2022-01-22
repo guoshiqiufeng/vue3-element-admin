@@ -46,8 +46,8 @@ const [pageContentRef, handlePageLoad] = usePageContent(undefined)
 
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   () => {
-    ;(defaultInfo as any).value.status = 1
-    ;(defaultInfo as any).value.orderNum = 0
+    defaultInfo.value.status = 1
+    defaultInfo.value.orderNum = 0
   },
   undefined
 )
@@ -60,7 +60,7 @@ const modalConfigComputed = computed(() => {
 })
 
 const saveDataCompleteHandle = () => {
-  ;(pageContentRef as any).value.pageInfo = { currentPage: 1, pageSize: 10 }
+  pageContentRef.value.pageInfo = { currentPage: 1, pageSize: 10 }
 }
 </script>
 <style scoped lang="scss"></style>

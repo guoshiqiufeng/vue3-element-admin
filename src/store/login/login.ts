@@ -7,7 +7,7 @@ import {
 } from '@/service/login/login'
 import { IAccount } from '@/service/login/type'
 import { Md5 } from 'ts-md5/dist/md5'
-import store from '@/store'
+import { useStore } from 'vuex'
 import localCache from '@/utils/cache'
 import { mapMenusToRoutes } from '@/utils/map-menus'
 import router from '@/router'
@@ -51,7 +51,8 @@ const loginModule: Module<ILoginState, any> = {
   },
   actions: {
     async accountLoginAction({ commit }, payload: IAccount) {
-      const salt = (store.state as any).app.salt
+      const store = useStore()
+      const salt = store.state.app.salt
       payload.password = Md5.hashStr(payload.password + salt)
       // login request
       const loginResult = await accountLoginRequest(payload)

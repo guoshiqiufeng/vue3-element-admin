@@ -5,7 +5,7 @@ type CallbackFn = (item?: any) => void
 
 export function usePageModel(newCb?: CallbackFn, editCb?: CallbackFn) {
   const pageModelRef = ref<InstanceType<typeof PageModel>>()
-  const defaultInfo = ref({})
+  const defaultInfo = ref<any>({})
   const handleNewData = () => {
     defaultInfo.value = {}
     if (pageModelRef.value) {

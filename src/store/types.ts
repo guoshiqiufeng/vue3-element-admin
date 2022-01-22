@@ -6,7 +6,8 @@ export interface IRootState {
 }
 
 export interface IRootWithModule {
+  app: IAppState
   login: ILoginState
 }
 
-export type IStoreType = IRootState & IAppState & IRootWithModule
+export type IStoreType = IRootState & IRootWithModule

@@ -55,7 +55,7 @@ const menuActiveName = computed({
   }
 })
 
-const mainTabs = computed({
+const mainTabs = computed<any>({
   get() {
     return store.state.app.mainTabs
   },
@@ -76,9 +76,7 @@ const mainTabsActiveName = computed({
 const routeHandle = (route: any) => {
   if (route.meta.isTab) {
     // tab选中, 不存在先添加
-    let tab = (mainTabs as any).value.filter(
-      (item: any) => item.name === route.name
-    )[0]
+    let tab = mainTabs.value.filter((item: any) => item.name === route.name)[0]
     if (!tab) {
       if (route.meta.isDynamic) {
         route = dynamicMenuRoutes.filter(
@@ -97,7 +95,7 @@ const routeHandle = (route: any) => {
         params: route.params,
         query: route.query
       }
-      mainTabs.value = (mainTabs as any).value.concat(tab)
+      mainTabs.value = mainTabs.value.concat(tab)
     }
     menuActiveName.value = tab.menuId + ''
     mainTabsActiveName.value = tab.name

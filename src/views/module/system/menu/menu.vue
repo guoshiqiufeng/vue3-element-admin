@@ -112,17 +112,17 @@ import { getMenuInfo, getMenuSelectData } from '@/service/module/system/menu'
 const menuListPopoverRef = ref()
 const menuTreeRef = ref()
 const iconListPopover = ref()
-const menuData = reactive({
+const menuData = reactive<any>({
   menuListTreeProps: {
     label: 'name',
     children: 'children'
   },
   menuList: []
 })
-const iconData = reactive({
+const iconData = reactive<any>({
   iconList: []
 })
-;(iconData as any).iconList = Icon.getNameList()
+iconData.iconList = Icon.getNameList()
 
 const menuListTreeCurrentChangeHandle = (data: any, node: any, row: any) => {
   row.parentId = data.menuId
@@ -135,7 +135,7 @@ const iconActiveHandle = (data: any, row: any) => {
 }
 
 const saveDataCompleteHandle = () => {
-  ;(pageContentRef as any).value.pageInfo = { currentPage: 1, pageSize: 10 }
+  pageContentRef.value.pageInfo = { currentPage: 1, pageSize: 10 }
 }
 
 const modalConfigRef = reactive(modalConfig)
@@ -174,15 +174,15 @@ const modalConfigComputed = computed(() => {
 const loadMenuData = () => {
   getMenuSelectData().then(res => {
     if (res && res.data) {
-      ;(menuData as any).menuList = treeDataTranslate(res.data, 'menuId')
+      menuData.menuList = treeDataTranslate(res.data, 'menuId')
     }
   })
 }
 
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   () => {
-    ;(defaultInfo as any).value.type = 1
-    ;(defaultInfo as any).value.orderNum = 0
+    defaultInfo.value.type = 1
+    defaultInfo.value.orderNum = 0
     loadMenuData()
   },
   item => {
@@ -193,7 +193,7 @@ const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
           res.data.parentName = (menuTreeRef.value.getCurrentNode() || {})[
             'name'
           ]
-          ;(pageModelRef as any).value.formData = res.data
+          pageModelRef.value.formData = res.data
         }, 100)
       }
     })

@@ -43,10 +43,10 @@ const props = defineProps({
 
 const menuRouteHandle = (menu: any) => {
   let route = props.dynamicMenuRoutes.filter(
-    item => (item as any).meta.menuId === menu.menuId
+    (item: any) => item.meta.menuId === menu.menuId
   )
   if (route.length >= 1) {
-    router.push({ name: (route as any)[0].name })
+    router.push({ name: route[0].name })
   }
 }
 </script>
