@@ -1,10 +1,6 @@
 <template>
   <div class="user">
-    <page-search
-      :search-form-config="searchFormConfig"
-      @resetBtnClick="handleResetClick"
-      @queryBtnClick="handleQueryClick"
-    ></page-search>
+    <page-search :search-form-config="searchFormConfig"></page-search>
     <page-content
       ref="pageContentRef"
       :content-table-config="contentTableConfig"

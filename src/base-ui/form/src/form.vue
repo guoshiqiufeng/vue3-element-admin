@@ -6,84 +6,44 @@
     <el-form ref="formRef" :model="modelValue" :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <el-col v-bind="colLayout">
-            <el-form-item
-              v-if="!item.isHidden"
-              :label="item.label"
-              :prop="item.field"
-              :rules="item.rules"
-              :style="itemStyle"
-            >
-              <template v-if="item.slotName">
-                <slot :name="item.slotName"></slot>
-              </template>
-              <template v-else>
-                <template
-                  v-if="item.type === 'input' || item.type === 'password'"
+          <template v-if="showFormItems">
+            <el-col v-bind="colLayout">
+              <el-form-item
+                v-if="!item.isHidden"
+                :label="item.label"
+                :prop="item.field"
+                :rules="item.rules"
+                :style="itemStyle"
+              >
+                <hq-form-item
+                  :model-value="modelValue"
+                  :item="item"
+                  @change="handleValueChange"
                 >
-                  <el-input
-                    :placeholder="item.placeholder"
-                    v-bind="item.otherOptions"
-                    :show-password="item.type === 'password'"
-                    :model-value="modelValue[`${item.field}`]"
-                    @update:modelValue="handleValueChange($event, item.field)"
-                  />
+                  <template #[item.slotName]>
+                    <template v-if="item.slotName">
+                      <slot :name="item.slotName"></slot>
+                    </template>
+                  </template>
+                </hq-form-item>
+              </el-form-item>
+            </el-col>
+          </template>
+          <template v-else>
+            <el-col v-bind="colLayout" :style="itemStyle">
+              <hq-form-item
+                :model-value="modelValue"
+                :item="item"
+                @change="handleValueChange"
+              >
+                <template #[item.slotName]>
+                  <template v-if="item.slotName">
+                    <slot :name="item.slotName"></slot>
+                  </template>
                 </template>
-                <template v-else-if="item.type === 'input-number'">
-                  <el-input-number
-                    :model-value="modelValue[`${item.field}`]"
-                    v-bind="item.otherOptions"
-                    :label="item.label"
-                    @update:modelValue="
-                      handleValueChange($event, item.field, item.change)
-                    "
-                  ></el-input-number>
-                </template>
-                <template v-else-if="item.type === 'select'">
-                  <el-select
-                    :placeholder="item.placeholder"
-                    v-bind="item.otherOptions"
-                    style="width: 100%"
-                    :model-value="modelValue[`${item.field}`]"
-                    @update:modelValue="
-                      handleValueChange($event, item.field, item.change)
-                    "
-                  >
-                    <el-option
-                      v-for="option in item.options"
-                      :key="option.value"
-                      :value="option.value"
-                      >{{ option.title }}</el-option
-                    >
-                  </el-select>
-                </template>
-                <template v-else-if="item.type === 'radio'">
-                  <el-radio-group
-                    style="width: 100%"
-                    :model-value="modelValue[`${item.field}`]"
-                    @update:modelValue="
-                      handleValueChange($event, item.field, item.change)
-                    "
-                  >
-                    <el-radio
-                      v-for="option in item.options"
-                      :key="option.value"
-                      :label="option.value"
-                      >{{ option.title }}
-                    </el-radio>
-                  </el-radio-group>
-                </template>
-                <template v-else-if="item.type === 'datepicker'">
-                  <el-date-picker
-                    style="width: 100%"
-                    v-bind="item.otherOptions"
-                    :model-value="modelValue[`${item.field}`]"
-                    @update:modelValue="handleValueChange($event, item.field)"
-                  ></el-date-picker>
-                </template>
-              </template>
-            </el-form-item>
-          </el-col>
+              </hq-form-item>
+            </el-col>
+          </template>
         </template>
       </el-row>
     </el-form>
@@ -95,13 +55,19 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
-import { IFormItem } from '../types'
+import { IFormItem } from '@/base-ui/form-item'
+import HqFormItem from '@/base-ui/form-item'
 import { ElForm } from 'element-plus'
 export default defineComponent({
+  components: { HqFormItem },
   props: {
     modelValue: {
       type: Object,
       required: true
+    },
+    showFormItems: {
+      type: Boolean,
+      default: true
     },
     formItems: {
       type: Array as PropType<IFormItem[]>,
@@ -130,8 +96,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const formRef = ref<InstanceType<typeof ElForm>>()
 
-    const handleValueChange = (value: any, field: string, change?: any) => {
-      change && change(value)
+    const handleValueChange = (value: any, field: string) => {
       emit('update:modelValue', { ...props.modelValue, [field]: value })
     }
 

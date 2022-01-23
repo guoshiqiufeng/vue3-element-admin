@@ -1,6 +1,10 @@
 <template>
   <div class="page-search">
-    <hq-form v-bind="searchFormConfig" v-model="formData">
+    <hq-form
+      v-bind="searchFormConfig"
+      v-model="formData"
+      :show-form-items="false"
+    >
       <template #footer>
         <el-button @click="handleResetClick"> 重置 </el-button>
         <el-button type="primary" @click="handleQueryClick"> 搜索 </el-button>
