@@ -6,10 +6,10 @@ const hqRequest = new HQRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
-    requestInterceptor: config => {
+    requestInterceptor: (config: any) => {
       const token = localCache.getCache('token')
       if (token) {
-        ;(config as any).headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token}`
       }
       return config
     },
