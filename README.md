@@ -20,7 +20,7 @@
 - [x] 导航
 - [x] 菜单选项卡
 - [x] 菜单管理
-- [ ] 用户管理
+- [x] 用户管理
 ## Project setup
 ```
 npm install
