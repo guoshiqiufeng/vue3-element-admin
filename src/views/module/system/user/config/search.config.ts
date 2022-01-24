@@ -10,19 +10,19 @@ export const searchFormConfig: IForm = {
   },
   formItems: [
     {
-      field: 'name',
+      field: 'username',
       type: 'input',
       label: '用户名',
       placeholder: '请输入用户名'
     },
     {
-      field: 'cellphone',
+      field: 'mobile',
       type: 'input',
       label: '电话号码',
       placeholder: '请输入电话号码'
     },
     {
-      field: 'enable',
+      field: 'status',
       type: 'select',
       label: '用户状态',
       placeholder: '请选择用户状态',
