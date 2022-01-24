@@ -3,8 +3,13 @@ import PageContent from '@/components/page-content'
 
 type CallbackFn = (item?: any) => void
 
-export function usePageContent(pageCb?: CallbackFn) {
-  const pageContentRef = ref<InstanceType<typeof PageContent>>({})
+export function usePageContent(
+  pageCb?: CallbackFn,
+  pageContentRef?: InstanceType<typeof PageContent>
+) {
+  if (!pageContentRef) {
+    pageContentRef = ref<InstanceType<typeof PageContent>>({})
+  }
   const handlePageData = (data: any) => {
     if (pageCb && pageCb(data)) {
       data = pageCb && pageCb(data)

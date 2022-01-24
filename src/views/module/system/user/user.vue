@@ -1,13 +1,16 @@
 <template>
   <div class="user">
-    <page-search :search-form-config="searchFormConfig"></page-search>
+    <page-search
+      :search-form-config="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    ></page-search>
     <page-content
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
-      load-data-url="/system/user/list"
+      load-data-url="/system/user/page"
       delete-data-u-rl="/system/user"
       primary-key="userId"
-      @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
     >
@@ -31,14 +34,14 @@ import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 
 import { searchFormConfig } from './config/search.config'
+import { usePageSearch } from '@/hooks/use-page-search'
 
 import { contentTableConfig } from './config/content.config'
-import { usePageContent } from '@/hooks/use-page-content'
 
 import { modalConfig } from './config/model.config'
 import { usePageModel } from '@/hooks/use-page-model'
 
-const [pageContentRef, handlePageLoad] = usePageContent(undefined)
+const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
 
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   () => {

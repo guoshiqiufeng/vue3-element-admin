@@ -5,7 +5,7 @@ import { IDataType } from '../../types'
 export function getPageListData(url: string, queryInfo: any) {
   return hyRequest.get<IDataType>({
     url: url,
-    data: queryInfo
+    params: queryInfo
   })
 }
 

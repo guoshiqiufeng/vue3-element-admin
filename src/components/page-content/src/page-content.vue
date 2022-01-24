@@ -122,9 +122,13 @@ let data = reactive({
 })
 
 watch(pageInfo, () => getPageData())
-const setPageData = (pageData: any) => {
+const setPageData = (pageData: any, totalCount?: number) => {
   data.dataList = pageData
-  data.count = pageData.length
+  if (totalCount) {
+    data.count = totalCount
+  } else {
+    data.count = pageData.length
+  }
 }
 const getPageData = async (queryInfo: any = {}) => {
   // if (!isQuery) return
@@ -134,12 +138,16 @@ const getPageData = async (queryInfo: any = {}) => {
     return
   }
   const pageResult = await getPageListData(url, {
-    page: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+    page: pageInfo.value.currentPage,
     limit: pageInfo.value.pageSize,
     ...queryInfo
   })
   if (pageResult && pageResult.data) {
-    setPageData(pageResult.data)
+    if (Array.isArray(pageResult.data)) {
+      setPageData(pageResult.data)
+    } else {
+      setPageData(pageResult.data.list, pageResult.data.totalCount)
+    }
     emits('pageDataLoad', pageResult.data)
   }
 }
@@ -231,6 +239,7 @@ const handleEditClick = (item: any) => {
 }
 defineExpose({
   setPageData,
+  getPageData,
   pageInfo
 })
 </script>

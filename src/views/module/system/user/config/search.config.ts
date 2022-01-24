@@ -3,7 +3,7 @@ import { IForm } from '@/base-ui/form'
 export const searchFormConfig: IForm = {
   labelWidth: '120px',
   itemStyle: {
-    padding: '10px 10px'
+    padding: '10px 20px 10px 0'
   },
   colLayout: {
     span: 4
@@ -30,6 +30,12 @@ export const searchFormConfig: IForm = {
         { title: '启用', value: 1 },
         { title: '禁用', value: 0 }
       ]
+    },
+    {
+      field: 'handler',
+      type: 'input',
+      label: '',
+      slotName: 'handler'
     }
   ]
 }

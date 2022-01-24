@@ -5,7 +5,7 @@
       v-model="formData"
       :show-form-items="false"
     >
-      <template #footer>
+      <template #handler>
         <el-button @click="handleResetClick"> 重置 </el-button>
         <el-button type="primary" @click="handleQueryClick"> 搜索 </el-button>
       </template>
