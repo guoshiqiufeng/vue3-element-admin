@@ -30,8 +30,8 @@ export function formItemHidden(
   field: string,
   hidden: boolean
 ) {
-  const passwordItem = modalConfigRef.formItems.find(
+  const findItem = modalConfigRef.formItems.find(
     (formItem: any) => formItem.field === field
   )
-  passwordItem!.isHidden = hidden
+  findItem!.isHidden = hidden
 }
