@@ -54,7 +54,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['complete'])
+const emits = defineEmits(['saveBefore', 'complete'])
 
 const dialogVisible = ref(false)
 const dialogTitle = ref('新增')
@@ -78,35 +78,55 @@ const handleConfirmClick = () => {
   formRef.value?.formRef.validate((isValid: any) => {
     if (isValid) {
       if (props.dataUrl) {
-        if (props.defaultInfo[props.primaryKey]) {
-          // 编辑
-          editPageData(props.dataUrl, {
-            ...formData.value
-          }).then(res => {
-            if (res && res.code === 20000) {
-              dialogVisible.value = false
-              emits('complete', 'edit')
+        let beforeFlag = true
+        emits(
+          'saveBefore',
+          formData.value,
+          (success: boolean, message?: string, data?: any) => {
+            if (!success) {
               ElMessage({
-                message: '操作成功',
-                type: 'success',
+                message: message,
+                type: 'error',
                 duration: 1500
               })
+              beforeFlag = false
+              return
             }
-          })
-        } else {
-          createPageData(props.dataUrl, {
-            ...formData.value
-          }).then(res => {
-            if (res && res.code === 20000) {
-              dialogVisible.value = false
-              emits('complete', 'create')
-              ElMessage({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500
-              })
-            }
-          })
+            console.log(data)
+            formData.value = data
+          }
+        )
+        if (beforeFlag) {
+          if (props.defaultInfo[props.primaryKey]) {
+            // 编辑
+            editPageData(props.dataUrl, {
+              ...formData.value
+            }).then(res => {
+              if (res && res.code === 20000) {
+                dialogVisible.value = false
+                emits('complete', 'edit')
+                ElMessage({
+                  message: '操作成功',
+                  type: 'success',
+                  duration: 1500
+                })
+              }
+            })
+          } else {
+            createPageData(props.dataUrl, {
+              ...formData.value
+            }).then(res => {
+              if (res && res.code === 20000) {
+                dialogVisible.value = false
+                emits('complete', 'create')
+                ElMessage({
+                  message: '操作成功',
+                  type: 'success',
+                  duration: 1500
+                })
+              }
+            })
+          }
         }
       } else {
         console.warn('data-url is empty')

@@ -29,3 +29,9 @@ export function editPageData(url: string, editData: any) {
     data: editData
   })
 }
+
+export function getInfoData(url: string) {
+  return hyRequest.get<IDataType>({
+    url: url
+  })
+}
