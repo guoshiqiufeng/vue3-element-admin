@@ -37,21 +37,30 @@
       </template>
       <template #handler="scope">
         <div class="handle-buttons">
-          <el-button
-            icon="el-icon-edit"
-            size="small"
-            type="text"
-            @click="handleEditClick(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            icon="el-icon-delete"
-            size="small"
-            type="text"
-            @click="handleDeleteClick(scope.row)"
-            >删除</el-button
-          >
+          <template v-for="(item, index) in handlerPropSlots" :key="index">
+            <template v-if="item === 'edit'">
+              <el-button
+                icon="el-icon-edit"
+                size="small"
+                type="text"
+                @click="handleEditClick(scope.row)"
+              >
+                编辑
+              </el-button>
+            </template>
+            <template v-else-if="item === 'delete'">
+              <el-button
+                icon="el-icon-delete"
+                size="small"
+                type="text"
+                @click="handleDeleteClick(scope.row)"
+                >删除</el-button
+              >
+            </template>
+            <template v-else>
+              <slot :name="item" :row="scope.row"></slot>
+            </template>
+          </template>
         </div>
       </template>
 
@@ -163,6 +172,13 @@ const otherPropSlots = props.contentTableConfig?.propList.filter(
     return true
   }
 )
+
+const handlerPropSlots = props.contentTableConfig?.propList.filter(
+  (item: any) => {
+    if (item.slotName === 'handler') return true
+    return false
+  }
+)[0]?.slots
 
 const handleSelectionChange = (val: any) => {
   data.dataListSelections = val
