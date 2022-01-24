@@ -24,3 +24,14 @@ export function usePageModel(newCb?: CallbackFn, editCb?: CallbackFn) {
   }
   return [pageModelRef, defaultInfo, handleNewData, handleEditData]
 }
+
+export function formItemHidden(
+  modalConfigRef: InstanceType<typeof PageModel>,
+  field: string,
+  hidden: boolean
+) {
+  const passwordItem = modalConfigRef.formItems.find(
+    (formItem: any) => formItem.field === field
+  )
+  passwordItem!.isHidden = hidden
+}

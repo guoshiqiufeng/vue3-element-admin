@@ -55,6 +55,6 @@ export const modalConfig: IForm = {
       ]
     }
   ],
-  colLayout: { span: 24 },
+  colLayout: { span: 12 },
   itemStyle: {}
 }

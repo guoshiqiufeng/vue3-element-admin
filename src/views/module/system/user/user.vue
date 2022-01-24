@@ -41,7 +41,7 @@ import { usePageSearch } from '@/hooks/use-page-search'
 import { contentTableConfig } from './config/content.config'
 
 import { modalConfig } from './config/model.config'
-import { usePageModel } from '@/hooks/use-page-model'
+import { formItemHidden, usePageModel } from '@/hooks/use-page-model'
 import { getInfoData } from '@/service/module/base/base'
 import { Md5 } from 'ts-md5'
 
@@ -51,26 +51,14 @@ const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
 
 const [pageModelRef, defaultInfo, handleNewData, handleEditData] = usePageModel(
   () => {
-    const passwordItem = modalConfigRef.formItems.find(
-      formItem => formItem.field === 'password'
-    )
-    passwordItem!.isHidden = false
-    const confirmPasswordItem = modalConfigRef.formItems.find(
-      formItem => formItem.field === 'confirmPassword'
-    )
-    confirmPasswordItem!.isHidden = false
+    formItemHidden(modalConfigRef, 'password', false)
+    formItemHidden(modalConfigRef, 'confirmPassword', false)
     defaultInfo.value.status = 1
     defaultInfo.value.orderNum = 0
   },
   item => {
-    const passwordItem = modalConfigRef.formItems.find(
-      formItem => formItem.field === 'password'
-    )
-    passwordItem!.isHidden = true
-    const confirmPasswordItem = modalConfigRef.formItems.find(
-      formItem => formItem.field === 'confirmPassword'
-    )
-    confirmPasswordItem!.isHidden = true
+    formItemHidden(modalConfigRef, 'password', true)
+    formItemHidden(modalConfigRef, 'confirmPassword', true)
     getInfoData(`/system/user/${item.userId}`).then(res => {
       if (res && res.data) {
         setTimeout(() => {
