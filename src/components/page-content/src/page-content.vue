@@ -40,7 +40,6 @@
           <template v-for="(item, index) in handlerPropSlots" :key="index">
             <template v-if="item === 'edit'">
               <el-button
-                icon="el-icon-edit"
                 size="small"
                 type="text"
                 @click="handleEditClick(scope.row)"
@@ -50,7 +49,6 @@
             </template>
             <template v-else-if="item === 'delete'">
               <el-button
-                icon="el-icon-delete"
                 size="small"
                 type="text"
                 @click="handleDeleteClick(scope.row)"

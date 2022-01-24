@@ -15,9 +15,7 @@
       @editBtnClick="handleEditData"
     >
       <template #restPassword>
-        <el-button icon="el-icon-delete" size="small" type="text">
-          重置密码
-        </el-button>
+        <el-button size="small" type="text"> 重置密码 </el-button>
       </template>
     </page-content>
     <page-model
