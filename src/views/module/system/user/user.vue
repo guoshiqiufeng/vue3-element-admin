@@ -14,8 +14,14 @@
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
     >
-      <template #restPassword>
-        <el-button size="small" type="text"> 重置密码 </el-button>
+      <template #restPassword="scope">
+        <el-button
+          size="small"
+          type="text"
+          @click="handleRestPassword(scope.row.userId)"
+        >
+          重置密码
+        </el-button>
       </template>
     </page-content>
     <page-model
@@ -24,8 +30,8 @@
       :modal-config="modalConfigComputed"
       data-url="/system/user"
       primary-key="userId"
-      @saveBefore="saveDataBeforeHandle"
-      @complete="saveDataCompleteHandle"
+      @saveBefore="handleSaveDataBefore"
+      @complete="refreshPageContentData"
     >
     </page-model>
   </div>
@@ -47,6 +53,8 @@ import { modalConfig } from './config/model.config'
 import { formItemHidden, usePageModel } from '@/hooks/use-page-model'
 import { getInfoData } from '@/service/module/base/base'
 import { Md5 } from 'ts-md5'
+import { resetPassword } from '@/service/module/user/user'
+import { ElMessage } from 'element-plus'
 
 const store = useStore()
 
@@ -81,7 +89,7 @@ const modalConfigComputed = computed(() => {
   return modalConfigRef
 })
 
-const saveDataBeforeHandle = (
+const handleSaveDataBefore = (
   formData: any,
   callback: (success: boolean, message?: string, formData?: any) => any
 ) => {
@@ -98,8 +106,21 @@ const saveDataBeforeHandle = (
   return
 }
 
-const saveDataCompleteHandle = () => {
+const refreshPageContentData = () => {
   pageContentRef.value.pageInfo = { currentPage: 1, pageSize: 10 }
+}
+
+const handleRestPassword = (userId: string) => {
+  resetPassword(userId).then(res => {
+    if (res && res.code === 20000) {
+      ElMessage({
+        message: '操作成功',
+        type: 'success',
+        duration: 1500,
+        onClose: refreshPageContentData
+      })
+    }
+  })
 }
 </script>
 <style scoped lang="scss"></style>
