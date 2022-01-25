@@ -46,7 +46,10 @@ const menuRouteHandle = (menu: any) => {
     (item: any) => item.meta.menuId === menu.menuId
   )
   if (route.length >= 1) {
-    router.push({ name: route[0].name })
+    router.push({ name: route[0].name }).catch(error => {
+      console.log(error)
+      router.push({ name: '404' })
+    })
   }
 }
 </script>
