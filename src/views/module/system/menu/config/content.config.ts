@@ -19,7 +19,12 @@ export const contentTableConfig = {
       minWidth: '220',
       slotName: 'updateAt'
     },*/
-    { label: '操作', minWidth: '150', slotName: 'handler' }
+    {
+      label: '操作',
+      minWidth: '150',
+      slotName: 'handler',
+      slots: ['edit', 'delete']
+    }
   ],
   showIndexColumn: false,
   showSelectColumn: true,

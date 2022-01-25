@@ -155,7 +155,17 @@ const getPageData = async (queryInfo: any = {}) => {
     } else {
       setPageData(pageResult.data.list, pageResult.data.totalCount)
     }
-    emits('pageDataLoad', pageResult.data)
+    emits(
+      'pageDataLoad',
+      pageResult.data,
+      (data?: any, totalCount?: number) => {
+        if (Array.isArray(data)) {
+          setPageData(data)
+        } else {
+          setPageData(data, totalCount)
+        }
+      }
+    )
   }
 }
 getPageData()
@@ -222,7 +232,7 @@ const handleDeletedConfirm = (item: any, items?: any) => {
   }
   if (items) {
     ids = items.map((tmp: any) => {
-      return tmp.userId
+      return tmp[props.primaryKey]
     })
   }
   if (ids.length === 0) {

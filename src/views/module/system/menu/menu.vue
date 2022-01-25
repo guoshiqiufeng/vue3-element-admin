@@ -102,13 +102,13 @@ import PageModel from '@/components/page-model'
 import Icon from '@/icons'
 
 import { contentTableConfig } from './config/content.config'
-import { usePageContent } from '@/hooks/use-page-content'
 
 import { modalConfig } from './config/model.config'
 import { usePageModel } from '@/hooks/use-page-model'
 
 import { treeDataTranslate } from '@/utils/map-menus'
 import { getMenuInfo, getMenuSelectData } from '@/service/module/system/menu'
+import { usePageSearch } from '@/hooks/use-page-search'
 const menuListPopoverRef = ref()
 const menuTreeRef = ref()
 const iconListPopover = ref()
@@ -139,10 +139,14 @@ const saveDataCompleteHandle = () => {
 }
 
 const modalConfigRef = reactive(modalConfig)
-const pageLoadCallback = (data: any) => {
-  return treeDataTranslate(data, 'menuId')
+const handlePageLoad = (
+  data: any,
+  callback: (callbackData?: any, totalCount?: number) => any
+) => {
+  data = treeDataTranslate(data, 'menuId')
+  callback(data, 1)
 }
-const [pageContentRef, handlePageLoad] = usePageContent(pageLoadCallback)
+const [pageContentRef] = usePageSearch()
 
 const typeChange = (value: any) => {
   const typeItem = modalConfigRef.formItems.find(item => item.field === 'type')
