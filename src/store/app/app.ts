@@ -1,6 +1,7 @@
 import { Module } from 'vuex'
 import { IAppState } from './types'
-const appModule: Module<IAppState, any> = {
+import { IRootState } from '@/store/types'
+const appModule: Module<IAppState, IRootState> = {
   namespaced: true,
   state() {
     return {

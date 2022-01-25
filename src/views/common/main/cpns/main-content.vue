@@ -68,7 +68,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { IMainTabs } from '@/store/app/types'

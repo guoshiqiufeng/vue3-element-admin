@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import SubMenu from './main-sidebar-sub-menu.vue'
 import { isURL } from '@/utils/validate'

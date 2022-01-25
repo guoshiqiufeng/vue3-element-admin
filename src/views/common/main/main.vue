@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 // 右上导航条
 import MainNavbar from './cpns/main-navbar.vue'
 // 左侧菜单

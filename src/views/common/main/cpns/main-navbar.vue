@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { ElMessageBox } from 'element-plus'
 import router from '@/router'
 import IconSvg from '@/components/icon-svg/src/icon-svg.vue'

@@ -1,4 +1,4 @@
-import { Module } from 'vuex'
+import type { Module } from 'vuex'
 import { ILoginState } from './types'
 import {
   accountLoginRequest,
@@ -7,11 +7,12 @@ import {
 } from '@/service/login/login'
 import { IAccount } from '@/service/login/type'
 import { Md5 } from 'ts-md5/dist/md5'
-import { useStore } from 'vuex'
+import store from '@/store'
 import localCache from '@/utils/cache'
 import { mapMenusToRoutes } from '@/utils/map-menus'
 import router from '@/router'
-const loginModule: Module<ILoginState, any> = {
+import { IRootState } from '@/store/types'
+const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
     return {
@@ -51,7 +52,6 @@ const loginModule: Module<ILoginState, any> = {
   },
   actions: {
     async accountLoginAction({ commit }, payload: IAccount) {
-      const store = useStore()
       const salt = store.state.app.salt
       payload.password = Md5.hashStr(payload.password + salt)
       // login request

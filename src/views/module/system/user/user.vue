@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
