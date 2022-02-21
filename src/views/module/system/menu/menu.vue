@@ -127,7 +127,7 @@ iconData.iconList = Icon.getNameList()
 const menuListTreeCurrentChangeHandle = (data: any, node: any, row: any) => {
   row.parentId = data.menuId
   row.parentName = data.name
-  // menuListPopoverRef.value?.hide()
+  menuListPopoverRef.value?.hide()
 }
 
 const iconActiveHandle = (data: any, row: any) => {
