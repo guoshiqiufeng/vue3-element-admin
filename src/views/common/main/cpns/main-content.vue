@@ -20,9 +20,9 @@
             <el-dropdown-item @click="tabsCloseAllHandle"
               >关闭全部标签页</el-dropdown-item
             >
-            <el-dropdown-item @click="refresh()"
-              >刷新当前标签页</el-dropdown-item
-            >
+<!--            <el-dropdown-item @click="tabsRefreshCurrentHandle()">
+              刷新当前标签页
+            </el-dropdown-item>-->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -176,6 +176,17 @@ const tabsCloseAllHandle = () => {
   menuActiveName.value = ''
   router.push({ name: 'home' })
 }
+
+// tabs, 刷新当前
+// const tabsRefreshCurrentHandle = () => {
+//   let tab = route
+//   removeTabHandle(tab.name)
+//   router.push({
+//     name: tab.name,
+//     query: tab.query,
+//     params: tab.params
+//   })
+// }
 </script>
 <style scoped lang="scss">
 .main-content {
