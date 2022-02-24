@@ -9,6 +9,10 @@ export interface IAppState {
   mainTabs: Array<IMainTabs>
   mainTabsActiveName: string
 }
+export interface IMainTabsParent {
+  props: IMainTabs
+}
+
 export interface IMainTabs {
   menuId: string
   name?: string

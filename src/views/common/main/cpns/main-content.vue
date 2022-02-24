@@ -71,7 +71,7 @@ import { computed } from 'vue'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { IMainTabs } from '@/store/app/types'
+import { IMainTabs, IMainTabsParent } from '@/store/app/types'
 import router from '@/router'
 import { isURL } from '@/utils/validate'
 const store = useStore()
@@ -117,30 +117,42 @@ const siteContentViewHeight = computed(() => {
   let height = documentClientHeight.value - 50 - 30 - 2 - 50
   if (route.meta.isTab) {
     height -= 40
-    return isURL(route.meta.iframeUrl)
+    return isURL((route.meta as any).iframeUrl)
       ? { height: height + 'px' }
       : { minHeight: height + 'px' }
   }
   return { minHeight: height + 'px' }
 })
 
-const selectedTabHandle = (tab: IMainTabs) => {
-  let tmp = mainTabs.value.filter((item: any) => item.name === tab.name)
+const selectedTabHandle = (tab: IMainTabsParent) => {
+  if (!tab.props) {
+    return
+  }
+  let tmp = mainTabs.value.filter(
+    (item: IMainTabs) => item.name === tab.props.name
+  )
+  console.log(tmp)
   if (tmp.length >= 1) {
     router.push({
       name: tmp[0].name,
-      query: tmp[0].query,
-      params: tmp[0].params
+      query: (tmp[0] as any).query,
+      params: (tmp[0] as any).param
     })
   }
 }
 const removeTabHandle = (tabName: string) => {
-  mainTabs.value = mainTabs.value.filter((item: any) => item.name !== tabName)
+  mainTabs.value = mainTabs.value.filter(
+    (item: IMainTabs) => item.name !== tabName
+  )
   if (mainTabs.value.length >= 1) {
     // 当前选中tab被删除
     if (tabName === mainTabsActiveName.value) {
       const tab = mainTabs.value[mainTabs.value.length - 1]
-      router.push({ name: tab.name, query: tab.query, params: tab.params })
+      router.push({
+        name: tab.name,
+        query: (tab as any).query,
+        params: (tab as any).params
+      })
       mainTabsActiveName.value = route.name
     }
   } else {
@@ -155,7 +167,7 @@ const tabsCloseCurrentHandle = () => {
 
 const tabsCloseOtherHandle = () => {
   mainTabs.value = mainTabs.value.filter(
-    (item: any) => item.name === mainTabsActiveName.value
+    (item: IMainTabs) => item.name === mainTabsActiveName.value
   )
 }
 
@@ -164,7 +176,6 @@ const tabsCloseAllHandle = () => {
   menuActiveName.value = ''
   router.push({ name: 'home' })
 }
-// console.log(route.meta)
 </script>
 <style scoped lang="scss">
 .main-content {
