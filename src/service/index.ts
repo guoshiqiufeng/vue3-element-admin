@@ -2,6 +2,7 @@ import HQRequest from '@/service/request'
 import { ElMessage } from 'element-plus'
 import { BASE_URL, TIME_OUT } from './request/config'
 import localCache from '@/utils/cache'
+import router from '@/router'
 const hqRequest = new HQRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
@@ -17,7 +18,12 @@ const hqRequest = new HQRequest({
       return error
     },
     responseInterceptor: res => {
-      // console.log(res)
+      if (res.data && res.data.code === 21101) {
+        // 登录失效
+        localCache.deleteCache('token')
+        ElMessage.error(res.data.message)
+        router.push('/login')
+      }
       return res
     },
     responseInterceptorCatch: error => {

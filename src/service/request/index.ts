@@ -4,6 +4,8 @@ import type { HQRequestInterceptors, HQRequestConfig } from './type'
 
 import { ElLoading, ElMessage } from 'element-plus'
 
+import localCache from '@/utils/cache'
+
 const DEFAULT_LOADING = true
 class HQRequest {
   instance: AxiosInstance
@@ -42,7 +44,16 @@ class HQRequest {
     this.instance.interceptors.response.use(
       res => {
         this.loading?.close()
-        if (res.data && res.data.code !== 20000) {
+        if (res.data && res.data.code === 21102) {
+          localCache.setCache('token', res.headers.authorization)
+          const backoff = new Promise(resolve => {
+            setTimeout(function () {
+              resolve(res)
+            }, 1)
+          })
+          // 重新发起axios请求
+          return backoff.then(() => this.instance.request(res.config))
+        } else if (res.data && res.data.code !== 20000) {
           ElMessage.error(res.data.message)
         }
         return res.data
