@@ -6,6 +6,7 @@
 [vea](https://github.com/guoshiqiufeng/vea)
 
 ## 依赖
+- typescript
 - vue3
 - vue-router
 - vuex

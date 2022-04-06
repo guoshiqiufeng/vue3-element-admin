@@ -1,7 +1,9 @@
 import hyRequest from '@/service'
 import { IDataType } from '@/service/types'
 
-enum MenuApi {
+export enum MenuApi {
+  List = '/system/menu/list',
+  Domain = '/system/menu',
   MenuSelect = '/system/menu/select',
   MenuInfo = '/system/menu/'
 }

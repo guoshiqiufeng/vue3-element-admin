@@ -3,8 +3,8 @@
     <page-content
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
-      load-data-url="/system/menu/list"
-      delete-data-u-rl="/system/menu"
+      :load-data-url="MenuApi.List"
+      :delete-data-u-rl="MenuApi.Domain"
       primary-key="menuId"
       @pageDataLoad="handlePageLoad"
       @addBtnClick="handleNewData"
@@ -27,7 +27,7 @@
       ref="pageModelRef"
       :default-info="defaultInfo"
       :modal-config="modalConfigComputed"
-      data-url="/system/menu"
+      :data-url="MenuApi.Domain"
       primary-key="menuId"
       @complete="saveDataCompleteHandle"
     >
@@ -100,6 +100,8 @@ import { computed, ref, reactive } from 'vue'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
 import Icon from '@/icons'
+
+import { MenuApi } from '@/service/module/system/menu'
 
 import { contentTableConfig } from './config/content.config'
 

@@ -8,8 +8,8 @@
     <page-content
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
-      load-data-url="/system/user/page"
-      delete-data-u-rl="/system/user"
+      :load-data-url="UserApi.Page"
+      :delete-data-u-rl="UserApi.Domain"
       primary-key="userId"
       @addBtnClick="handleNewData"
       @editBtnClick="handleEditData"
@@ -28,7 +28,7 @@
       ref="pageModelRef"
       :default-info="defaultInfo"
       :modal-config="modalConfigComputed"
-      data-url="/system/user"
+      :data-url="UserApi.Domain"
       primary-key="userId"
       @saveBefore="handleSaveDataBefore"
       @complete="refreshPageContentData"
@@ -43,6 +43,8 @@ import { useStore } from '@/store'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
+
+import { UserApi } from '@/service/module/user/user'
 
 import { searchFormConfig } from './config/search.config'
 import { usePageSearch } from '@/hooks/use-page-search'

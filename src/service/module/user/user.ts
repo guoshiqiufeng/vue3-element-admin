@@ -1,7 +1,9 @@
 import hyRequest from '@/service'
 import { IDataType } from '@/service/types'
 
-enum UserApi {
+export enum UserApi {
+  Page = '/system/user/page',
+  Domain = '/system/user',
   ResetPassword = '/system/user/resetPassword'
 }
 
